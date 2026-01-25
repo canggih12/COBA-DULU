@@ -2,46 +2,74 @@ import streamlit as st
 import google.generativeai as genai
 
 # Konfigurasi Halaman
-st.set_page_config(page_title="Affiliate Genie AI", page_icon="🪄")
+st.set_page_config(page_title="Affiliate Genie AI", page_icon="🪄", layout="centered")
 
-# --- SIDEBAR: Setting API Key ---
-with st.sidebar:
-    st.title("Pengaturan")
+# Custom CSS
+st.markdown("""
+    <style>
+    .main { background-color: #f0f2f6; }
+    .stSelectbox, .stTextInput { margin-bottom: 10px; }
+    .result-card {
+        background-color: white;
+        padding: 25px;
+        border-radius: 15px;
+        border-left: 8px solid #FF4B4B;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        line-height: 1.6;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+st.title("IDE KONTEN CUAN GENERATOR")
+st.write("Sesuaikan target marketmu agar konversi makin tinggi!")
+
+# --- AREA INPUT ---
+with st.expander("⚙️ Konfigurasi Konten", expanded=True):
     api_key = "AIzaSyCaSLrhJgnx6Ok5RKItn1pCf4zyPcA45Ds"
-    st.info("Dapatkan API Key di Google AI Studio")
+    produk = st.text_input("Nama Produk", placeholder="------")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        target_usia = st.selectbox(
+            "Target Usia Pembeli", 
+            ["Remaja/Gen Z (15-24)", "Dewasa Muda (25-35)", "Orangtua (35-50)"]
+        )
+    with col2:
+        gaya_bahasa = st.selectbox("Tone Bicara", ["Sangat Santai", "Informatif", "Emosional", "To The Point"])
 
-# --- MAIN UI ---
-st.title("🪄 Affiliate Content Genie")
-st.write("Masukkan nama produk, dan biarkan AI meracik skrip konten yang menjual untukmu.")
-
-produk = st.text_input("Nama Produk", placeholder="Contoh: Powerbank 20.000mAh Mini")
-gaya_bahasa = st.selectbox("Gaya Bahasa", ["Santai/Gokil", "Edukasi/Serius", "Review Jujur", "Hard Sell"])
-
-if st.button("Generate Ide Konten ✨"):
-    if not api_key:
-        st.error("Silakan masukkan API Key di sidebar kiri dulu ya!")
-    elif not produk:
-        st.warning("Nama produknya diisi dulu boss!")
+# --- PROMPT LOGIC ---
+if st.button("Generate Skrip Viral ✨"):
+    if not api_key or not produk:
+        st.warning("Lengkapi data produk dulu Ya")
     else:
         try:
             genai.configure(api_key=api_key)
             model = genai.GenerativeModel('gemini-3-flash-preview')
             
             prompt = f"""
-            Kamu adalah ahli copywriting affiliate TikTok dan Instagram. 
-            Buatkan skrip konten untuk produk: {produk}.
-            Gunakan gaya bahasa: {gaya_bahasa}.
-            Format harus terdiri dari:
-            1. **HOOK**: Kalimat pembuka yang bikin orang berhenti scrolling.
-            2. **MASALAH**: Singgung keresahan yang dialami calon pembeli.
-            3. **SOLUSI/VALUE**: Kenapa produk {produk} ini wajib dibeli.
-            4. **CTA**: Ajakan beli di keranjang kuning atau klik link di bio.
+            Tugas: Buat skrip affiliate video pendek (TikTok/Shopee).
+            Produk: {produk}
+            Target Usia: {target_usia}
+            Gaya Bahasa: {gaya_bahasa}
+
+            Instruksi Khusus:
+            1. Sesuaikan kosa kata dengan target usia {target_usia}. Jika Gen Z gunakan bahasa gaul yang relevan. Jika Orang Tua, gunakan bahasa yang sopan dan jelas.
+            2. Struktur: 
+               - HOOK: 3 detik pertama yang bikin berhenti scroll.
+               - MASALAH: Relate dengan usia tersebut.
+               - SOLUSI: Manfaat {produk}.
+               - CTA: Wajib sebut "Klik keranjang di pojok kiri bawah sekarang juga!".
             """
             
-            with st.spinner('Genie sedang meracik kata-kata...'):
+            with st.spinner('Menyesuaikan frekuensi bahasa AI...'):
                 response = model.generate_content(prompt)
-                st.subheader("Hasil Racikan AI:")
-                st.markdown(response.text)
+                
+                st.markdown("### 🎬 Skrip Konten Kamu")
+                st.markdown(f"""<div class="result-card">{response.text}</div>""", unsafe_allow_html=True)
                 st.balloons()
+                
         except Exception as e:
-            st.error(f"Terjadi kesalahan: {e}")
+            st.error(f"Error: {e}")
+
+st.markdown("---")
+st.caption("Tips: Untuk target Gen Z, jangan terlalu kaku. Untuk Orang Tua, fokus pada solusi masalah sehari-hari.")
