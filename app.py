@@ -170,7 +170,7 @@ with col3:
 def generate_content():
     st.session_state["sudah_klik"] = True
     try:
-                prompt = f"""Buat skrip affiliate {durasi} untuk {produk}. 
+        prompt = f"""Buat skrip affiliate {durasi} untuk {produk}. 
         Keunggulan Produk: {value_produk}.
         Konteks: {konteks}. 
         Target Usia: {target_usia}. 
@@ -199,11 +199,13 @@ def generate_content():
         dst...
 
         Berikan 1x enter (baris kosong) antar segmen waktu agar rapi."""
+        
         response = model.generate_content(prompt)
         st.session_state.hasil_ai = response.text
     except:
         st.error("Gagal generate!")
 
+# Tombol Generate
 if st.button("Generate Skrip"):
     if not produk:
         st.warning("⚠️ Nama Produk wajib diisi!")
@@ -231,19 +233,20 @@ if 'hasil_ai' in st.session_state:
     st.markdown("<span class='label-box'>🎙️ teks voice over (salin disini)</span>", unsafe_allow_html=True)
     st.code(vo_text, language="text")
 
-
+    # Tombol Navigasi (Warna dan Nama Baru)
     col_re, col_done = st.columns(2)
     with col_re:
-        if st.button("🔄 Coba Lagi", key="btn_lagi", use_container_width=True):
+        if st.button("🔄 Coba Ide Lain", key="btn_lagi", use_container_width=True):
             generate_content()
             st.rerun()
     with col_done:
+        # Nama diganti jadi Reset, fungsi reset_form tetap dipertahankan
         if st.button("🗑️ Reset", key="btn_reset", use_container_width=True, on_click=reset_form):
             st.rerun()
-
-# --- FOOTER (VERSI AMAN) ---
-    st.markdown("""
+            # --- FOOTER (NAMA PEMBUAT) ---
+st.markdown("""
     <div class="footer">
-        <p>Built with <span style="color: #e74c3c;">&hearts;</span> by <b>Cerita Ozi</b> | &copy; 2026 Skripi Konten Team</p>
+        <p>Built with ❤️ by <b>[Cerita Ozi]</b> | © 2026 Skripi Konten Team</p>
     </div>
     """, unsafe_allow_html=True)
+        
