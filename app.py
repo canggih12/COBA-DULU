@@ -101,7 +101,7 @@ st.markdown("<p class='tagline'>Rancang Skrip Video Viral & Auto-Cuan dalam Hitu
 # --- MENU TUTORIAL (POJOK KANAN) ---
 col_judul, col_tutor = st.columns([4, 1])
 with col_tutor:
-    with st.popover("📖 Info"):
+    with st.popover("📖 TUTORIAL"):
         st.markdown("### 💡 Panduan Penggunaan")
         st.write("""
         1. **📦 Nama Produk**: Isi nama barang yang ingin dijual.
