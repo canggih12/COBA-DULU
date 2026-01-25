@@ -8,6 +8,7 @@ st.set_page_config(page_title="Affiliate Genie Pro", page_icon="🪄", layout="c
 def reset_form():
     st.session_state["produk"] = ""
     st.session_state["konteks"] = ""
+    st.session_state["value_produk"] = "" # Reset value baru
     st.session_state["sudah_klik"] = False
     if "hasil_ai" in st.session_state:
         del st.session_state["hasil_ai"]
@@ -37,7 +38,7 @@ st.markdown(f"""
         color: #333;
         line-height: 1.8; 
         font-family: sans-serif;
-        white-space: pre-wrap; /* Menjaga Enter dari AI tetap muncul */
+        white-space: pre-wrap; 
         word-wrap: break-word;
     }}
     
@@ -60,7 +61,7 @@ st.markdown(f"""
         border-radius: 10px; font-weight: bold; border: none;
     }}
     div.stButton > button[key="btn_selesai"] {{
-        background-color: #7FFFD4 !important; color: white !important;
+        background-color: #27AE60 !important; color: white !important;
         border-radius: 10px; font-weight: bold; border: none;
     }}
     </style>
@@ -69,16 +70,18 @@ st.markdown(f"""
 st.title("🪄 Affiliate Genie Pro")
 
 # --- INPUT AREA ---
-produk = st.text_input("Nama Produk", key="produk")
-konteks = st.text_area("Konteks / Situasi", key="konteks")
+produk = st.text_input("📦 Nama Produk", key="produk")
+# MENU VALUE BARU
+value_produk = st.text_input("💎 Keunggulan / Value Produk", key="value_produk", placeholder="Contoh: Anti air, garansi 1 thn, bahan kulit asli")
+konteks = st.text_area("🎯 Konteks / Situasi", key="konteks")
 
 col1, col2, col3 = st.columns(3)
 with col1:
-    target_usia = st.selectbox("Target Usia", ["Gen Z", "Dewasa", "Orang Tua", "Umum"])
+    target_usia = st.selectbox("👥 Target Usia", ["Gen Z", "Dewasa", "Orang Tua", "Umum"])
 with col2:
-    durasi = st.selectbox("Durasi", ["20 detik", "30 detik", "45 detik", "60 detik"])
+    durasi = st.selectbox("⏱️ Durasi", ["20 detik", "30 detik", "45 detik", "60 detik"])
 with col3:
-    angle = st.selectbox("Angle", ["Review Jujur", "Tips & Trik", "Eksperimen", "Storytelling"])
+    angle = st.selectbox("🎬 Angle Konten", ["Review Jujur", "Tips & Trik", "Eksperimen", "Storytelling"])
 
 # --- GENERATE LOGIC ---
 def generate_content():
@@ -87,23 +90,36 @@ def generate_content():
         return
     st.session_state["sudah_klik"] = True
     try:
-        # Prompt dipertegas untuk pemisahan baris per durasi
-        prompt = f"""Buat skrip affiliate {durasi} untuk {produk}. Konteks: {konteks}. Target Usia: {target_usia}. Angle: {angle}.
-        Wajib gunakan format list vertikal ke bawah seperti ini:
+        # Gaya bahasa disesuaikan otomatis berdasarkan target_usia di dalam prompt
+        prompt = f"""Buat skrip affiliate {durasi} untuk {produk}. 
+        Keunggulan Produk: {value_produk}.
+        Konteks: {konteks}. 
+        Target Usia: {target_usia}. 
+        Angle: {angle}.
+        
+        PENTING: Gunakan gaya bahasa dan kosa kata yang sangat sesuai untuk {target_usia}.
+        Wajib gunakan format vertikal ke bawah dengan jeda antar baris yang jelas. 
+        DILARANG MENGGUNAKAN TABEL.
+
+        Susun seperti ini:
 
         BAGIAN VISUAL:
-        0-5 detik: (instruksi)
-        5-10 detik: (instruksi)
+        0-5 detik: [Instruksi kamera]
+        
+        5-10 detik: [Instruksi kamera]
+        
         dst...
 
         ---
 
         BAGIAN VOICE OVER:
-        0-5 detik (Hook): (teks narasi)
-        5-10 detik: (teks narasi)
+        0-5 detik (Hook): [Teks narasi]
+        
+        5-10 detik: [Teks narasi]
+        
         dst...
 
-        Jangan gunakan tabel. Berikan enter (jarak baris) yang jelas antar durasi."""
+        Berikan 1x enter (baris kosong) antar segmen waktu agar rapi."""
         
         response = model.generate_content(prompt)
         st.session_state.hasil_ai = response.text
@@ -130,7 +146,7 @@ if 'hasil_ai' in st.session_state:
     st.markdown(f"<div class='box-container'>{visual_text}</div>", unsafe_allow_html=True)
 
     # Kotak Voice Over
-    st.markdown("<span class='label-box'>🎙️ teks voice over</span>", unsafe_allow_html=True)
+    st.markdown("<span class='label-box'>🎙️ teks voice over (salin disini)</span>", unsafe_allow_html=True)
     st.code(vo_text, language="text")
 
     # Tombol Navigasi
