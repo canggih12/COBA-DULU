@@ -56,7 +56,7 @@ st.markdown(f"""
 
     .tagline {{
         color: #7f8c8d;
-        font-size: 5px;
+        font-size: 0,5 em;
         text-align: center;
         margin-top: -10px;
         margin-bottom: 25px;
