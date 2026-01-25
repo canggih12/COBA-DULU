@@ -2,9 +2,9 @@ import streamlit as st
 import google.generativeai as genai
 
 # Konfigurasi Halaman
-st.set_page_config(page_title="IDE KONTEN AFFILIATE", page_icon="🪄", layout="centered")
+st.set_page_config(page_title="Affiliate Genie Pro", page_icon="🪄", layout="centered")
 
-# Custom CSS untuk UI yang lebih clean
+# Custom CSS
 st.markdown("""
     <style>
     .main { background-color: #f8f9fa; }
@@ -15,63 +15,61 @@ st.markdown("""
         border-left: 8px solid #FF4B4B;
         box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         color: #333;
+        white-space: pre-wrap;
     }
+    .stTextArea textarea { border-radius: 10px; }
     </style>
     """, unsafe_allow_html=True)
 
-st.title("GENERATOR IDE KONTEN")
-st.write("Racik skrip konten viral yang pas dengan durasi dan target audiensmu.")
+st.title("🪄 Affiliate Genie Pro")
+st.write("Sekarang AI akan mengikuti kemauan dan situasi produkmu!")
 
 # --- AREA INPUT ---
 with st.container():
     api_key = st.sidebar.text_input("Gemini API Key", type="password")
-    st.sidebar.info("Gunakan Gemini 3 Flash Preview untuk hasil terbaik.")
     
-    produk = st.text_input("Nama Produk", placeholder="Contoh: Blender Portable Mini")
+    produk = st.text_input("Nama Produk", placeholder="Contoh: Lap Microfiber Premium")
+    
+    # FITUR BARU: KONTEKS PRODUK
+    konteks = st.text_area("Situasi / Kegunaan Spesifik (Opsional)", 
+                           placeholder="Contoh: Fokus untuk bersihin dashboard mobil yang berdebu parah, atau untuk ngeringin piring di dapur tanpa ninggalin serat.")
     
     col1, col2, col3 = st.columns(3)
     with col1:
-        target_usia = st.selectbox(
-            "Target Usia", 
-            ["Gen Z (15-24)", "Dewasa (25-35)", "Orang Tua (35+)", "Umum"]
-        )
+        # FITUR BARU: ANGLE KONTEN
+        angle = st.selectbox("Angle Konten", ["Eksperimen/Tes", "Review Jujur", "Tips & Trik", "Storytelling", "Unboxing"])
     with col2:
-        durasi = st.selectbox("Durasi Video", ["20 detik", "30 detik", "45 detik", "60 detik"])
+        target_usia = st.selectbox("Target Usia", ["Gen Z", "Dewasa", "Orang Tua", "Umum"])
     with col3:
-        gaya_bahasa = st.selectbox("Tone", ["Santai", "Informatif", "Hard Sell"])
+        durasi = st.selectbox("Durasi", ["20 detik", "30 detik", "45 detik", "60 detik"])
 
 # --- LOGIKA GENERATE ---
-if st.button("Generate Skrip Viral ✨"):
+if st.button("Generate Skrip Sesuai Keinginan ✨"):
     if not api_key or not produk:
-        st.warning("Pastikan Nama Produk dan API Key sudah terisi!")
+        st.warning("Nama Produk dan API Key wajib diisi!")
     else:
         try:
             genai.configure(api_key=api_key)
             model = genai.GenerativeModel('gemini-3-flash-preview')
             
-            # Prompt yang disesuaikan dengan Durasi
             prompt = f"""
-            Tugas: Buat skrip konten video pendek (TikTok/Shopee).
+            Tugas: Buat skrip affiliate video pendek (TikTok/Shopee).
             Produk: {produk}
+            Konteks Spesifik: {konteks if konteks else 'Umum'}
+            Angle Konten: {angle}
             Target Usia: {target_usia}
             Durasi Target: {durasi}
-            Gaya Bahasa: {gaya_bahasa}
 
             Instruksi Khusus:
-            1. Sesuaikan panjang kalimat agar pas dibacakan dalam waktu {durasi}.
-            2. Kosa kata harus relevan dengan {target_usia}.
-            3. Struktur wajib:
-               - HOOK: Instan memicu penasaran.
-               - MASALAH: Singkat & relate.
-               - SOLUSI: Mengapa {produk} adalah jawabannya.
-               - CTA: Wajib sebut "Klik keranjang di pojok kiri bawah sekarang juga!".
-            4. Berikan estimasi pembagian waktu di setiap bagian (misal: [00:00-00:05] Hook).
+            1. Jika ada 'Konteks Spesifik', fokuslah pada situasi tersebut. Jangan bahas kegunaan lain yang tidak relevan.
+            2. Sesuaikan pembukaan video dengan 'Angle Konten' {angle}.
+            3. Struktur: HOOK (detik 1-3), MASALAH yang sesuai konteks, SOLUSI (keunggulan produk), dan CTA wajib "Klik keranjang di pojok kiri bawah sekarang!".
+            4. Gunakan bahasa yang relate dengan {target_usia}.
             """
             
-            with st.spinner(f'Menyusun skrip {durasi}...'):
+            with st.spinner('Menyesuaikan skrip dengan pikiranmu...'):
                 response = model.generate_content(prompt)
-                
-                st.markdown(f"### 🎬 Skrip Konten ({durasi})")
+                st.markdown(f"### 🎬 Skrip {angle} ({durasi})")
                 st.markdown(f"""<div class="result-card">{response.text}</div>""", unsafe_allow_html=True)
                 st.balloons()
                 
@@ -79,4 +77,4 @@ if st.button("Generate Skrip Viral ✨"):
             st.error(f"Error: {e}")
 
 st.markdown("---")
-st.caption("Tips: Untuk durasi 20 detik, fokuslah pada Hook dan CTA yang kuat.")
+st.caption("Gunakan kolom 'Situasi' untuk membedakan skrip satu produk yang punya banyak fungsi.")
