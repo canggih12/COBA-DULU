@@ -277,11 +277,11 @@ if 'hasil_ai' in st.session_state:
         vo_text = res
 
     # Kotak Visual
-    st.markdown("<span class='label-box'>📸 visual konten</span>", unsafe_allow_html=True)
+    st.markdown("<span class='label-box'>Berikut Hasilnya</span>", unsafe_allow_html=True)
     st.markdown(f"<div class='box-container'>{visual_text}</div>", unsafe_allow_html=True)
 
     # Kotak Voice Over
-    st.markdown("<span class='label-box'>🎙️ teks voice over (salin disini)</span>", unsafe_allow_html=True)
+    st.markdown("<span class='label-box'>Salin Skrip Disini)</span>", unsafe_allow_html=True)
     st.code(vo_text, language="text")
      # Tombol Navigasi (Warna dan Nama Baru)
     col_re, col_done = st.columns(2)
