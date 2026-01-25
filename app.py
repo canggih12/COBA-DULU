@@ -41,6 +41,26 @@ st.markdown(f"""
         white-space: pre-wrap; 
         word-wrap: break-word;
     }}
+    /* Efek Logo Estetik */
+    .logo-container {{
+        display: flex;
+        justify-content: center;
+        transition: transform 0.3s ease;
+        filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.1));
+    }}
+    .logo-container:hover {{
+        transform: scale(1.05); /* Membesar sedikit saat hover */
+    }}
+    
+    /* Animasi Tagline */
+    .tagline {{
+        color: #7f8c8d;
+        font-size: 1.1em;
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 30px;
+        font-style: italic;
+    }}
     .footer {{
         position: relative;
         left: 0;
@@ -96,8 +116,17 @@ st.markdown(f"""
     """, unsafe_allow_html=True)
 
 # --- UI HEADER ---
-st.markdown("<h1 style='text-align: center;'>Skripi Konten</h1>", unsafe_allow_html=True)
-st.markdown("<p class='tagline'>Rancang Skrip Video Viral & Auto-Cuan dalam Hitungan Detik</p>", unsafe_allow_html=True)
+# Membuat grid untuk menaruh logo di tengah
+col_left, col_mid, col_right = st.columns([1, 2, 1])
+
+with col_mid:
+    # Menggunakan container HTML agar CSS tadi bisa bekerja
+    st.markdown('<div class="logo-container">', unsafe_allow_html=True)
+    st.image("logo.png") # Pastikan file gambar namanya logo.png
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# Tagline di bawah logo
+st.markdown("<p class='tagline'>\"Rancang Skrip Video Viral & Auto-Cuan dalam Hitungan Detik\"</p>", unsafe_allow_html=True)
 # --- MENU TUTORIAL (POJOK KANAN) ---
 col_judul, col_tutor = st.columns([4, 1])
 with col_tutor:
