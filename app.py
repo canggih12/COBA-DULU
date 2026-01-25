@@ -198,8 +198,7 @@ def generate_content():
         
         dst...
 
-        Berikan 1x enter (baris kosong) antar segmen waktu agar rapi."""
-        
+        Berikan 1x enter (baris kosong) antar segmen waktu agar rapi.""
         response = model.generate_content(prompt)
         st.session_state.hasil_ai = response.text
     except:
