@@ -68,7 +68,7 @@ st.markdown(f"""
     """, unsafe_allow_html=True)
 
 st.title("Skripi Affiliate")
-st.title("<p class='tagline'>Rancang Skrip Video Viral & Auto-Cuan dalam Hitungan Detik</p>", unsafe_allow_html=True)
+st.title("<p>Rancang Skrip Video Viral & Auto-Cuan dalam Hitungan Detik</p>")
 
 # --- INPUT AREA ---
 produk = st.text_input("📦 Nama Produk", key="produk")
