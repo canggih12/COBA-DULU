@@ -122,7 +122,7 @@ col_left, col_mid, col_right = st.columns([1, 2, 1])
 with col_mid:
     # Menggunakan container HTML agar CSS tadi bisa bekerja
     st.markdown('<div class="logo-container">', unsafe_allow_html=True)
-    st.image("logo.png") # Pastikan file gambar namanya logo.png
+    st.image("logo.png" width=200) # Pastikan file gambar namanya logo.png
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Tagline di bawah logo
