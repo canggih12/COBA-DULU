@@ -51,6 +51,25 @@ st.markdown(f"""
         font-style: italic;
         line-height: 1.4;
     }}
+    /* Paksa Logo ke Tengah */
+    [data-testid="stImage"] {{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }}
+
+    /* Kecilkan Tombol Tutorial & Geser Kiri */
+    .stPopover {{
+        text-align: left !important;
+        display: inline-block !important;
+    }}
+    
+    .stPopover button {{
+        width: auto !important;
+        padding: 0px 15px !important;
+        height: 2.5em !important;
+        font-size: 0.8em !important;
+    }}
 
     .box-container {{
         background-color: white; 
@@ -95,21 +114,20 @@ st.markdown(f"""
     """, unsafe_allow_html=True)
 
 # --- UI HEADER ---
-# Menampilkan Logo agar Center
-st.markdown('<div class="logo-container">', unsafe_allow_html=True)
-st.image("logo.png", width=180) # Ukuran 180px sangat ideal untuk mobile
-st.markdown('</div>', unsafe_allow_html=True)
+# Logo Center (Menggunakan baris tunggal agar CSS bekerja maksimal)
+st.image("logo.png", width=180)
 
+# Tagline Center
 st.markdown("<p class='tagline'>\"Rancang Skrip Video Viral & Auto-Cuan<br>dalam Hitungan Detik\"</p>", unsafe_allow_html=True)
 
-# Tutorial diletakkan di tengah
-col_tutor_center = st.columns([1, 2, 1])
-with col_tutor_center[1]:
-    with st.popover("📖 LIHAT TUTORIAL", use_container_width=True):
+# Tutorial di Kiri (Button Kecil)
+col_tutor, col_empty = st.columns([1, 3]) # Kolom kecil di kiri, sisanya kosong
+with col_tutor:
+    with st.popover("📖 TUTORIAL"):
         st.markdown("### 💡 Panduan Penggunaan")
-        st.write("1. **📦 Nama Produk**: Isi nama barang.")
-        st.write("2. **💎 Value**: Sebutkan kelebihan produk.")
-        st.write("3. **🎯 Konteks**: Ceritakan suasana video.")
+        st.write("1. **📦 Produk**: Isi nama barang.")
+        st.write("2. **💎 Value**: Kelebihan produk.")
+        st.write("3. **🎯 Konteks**: Suasana video.")
 
 # --- INPUT AREA ---
 st.write("---")
