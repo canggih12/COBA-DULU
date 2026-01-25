@@ -225,8 +225,20 @@ if st.button("Generate Skrip"):
     if not produk:
         st.warning("⚠️ Nama Produk wajib diisi!")
     else:
+        # 1. Buat tempat kosong (placeholder)
+        loading_placeholder = st.empty()
+        
+        # 2. Tampilkan GIF dan Teks di dalam placeholder
+        with loading_placeholder.container():
+            st.markdown('<p class="loading-text">Mohon tunggu, Skrip sedang dibuat...</p>', unsafe_allow_html=True)
+            # Ganti URL ini dengan link GIF loading pilihanmu atau file lokal
+            st.image("https://i.gifer.com/ZZ5H.gif", width=100) 
+        
+        # 3. Jalankan fungsi generate
         generate_content()
-
+        
+        # 4. Hapus loading setelah selesai agar bersih
+        loading_placeholder.empty()
 # --- TAMPILAN HASIL ---
 if 'hasil_ai' in st.session_state:
     st.markdown("---")
@@ -251,16 +263,16 @@ if 'hasil_ai' in st.session_state:
     # Tombol Navigasi (Warna dan Nama Baru)
     col_re, col_done = st.columns(2)
     with col_re:
-        if st.button("🔄 Coba Ide Lain", key="btn_lagi", use_container_width=True):
+        if st.button("🔄 COBA IDE LAIN", key="btn_lagi", use_container_width=True):
             generate_content()
             st.rerun()
     with col_done:
-        if st.button("🗑️ Reset", key="btn_reset", use_container_width=True, on_click=reset_form):
+        if st.button("🗑️ RESET", key="btn_reset", use_container_width=True, on_click=reset_form):
             st.rerun()
             # --- FOOTER (NAMA PEMBUAT) ---
 st.markdown("""
     <div class="footer">
-        <p>Built with ❤️ by <b>[Cerita Ozi]</b> | © 2026 Skripi Konten Team</p>
+        <p>Created by <b>[Cerita Ozi]</b> | © 2026 Skripi Konten Team</p>
     </div>
     """, unsafe_allow_html=True)
         
