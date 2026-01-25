@@ -2,13 +2,13 @@ import streamlit as st
 import google.generativeai as genai
 
 # Konfigurasi Halaman
-st.set_page_config(page_title="Skripi Affiliate", page_icon="🪄", layout="centered")
+st.set_page_config(page_title="SKRIPI KONTEN", page_icon="🪄", layout="centered")
 
 # --- FUNGSI RESET ---
 def reset_form():
     st.session_state["produk"] = ""
     st.session_state["konteks"] = ""
-    st.session_state["value_produk"] = "" # Reset value baru
+    st.session_state["value_produk"] = "" 
     st.session_state["sudah_klik"] = False
     if "hasil_ai" in st.session_state:
         del st.session_state["hasil_ai"]
@@ -50,33 +50,42 @@ st.markdown(f"""
         display: block; 
         color: #444; 
     }}
-    .p {{
-    text-align: center;
-    }}
-    .text-center {{
-    text-align: center;
-    }}
+
+    /* Tombol Utama Generate */
     div.stButton > button:first-child {{
         background-color: {gen_bg} !important;
         color: {gen_txt} !important;
         border-radius: 10px; font-weight: bold; height: 3.5em; width: 100%; border: none;
     }}
+    
+    /* Tombol Coba Ide Lain (Sekarang warna BIRU) */
     div.stButton > button[key="btn_lagi"] {{
-        background-color: #F39C12 !important; color: white !important;
+        background-color: #3498DB !important; color: white !important;
         border-radius: 10px; font-weight: bold; border: none;
     }}
-    div.stButton > button[key="btn_selesai"] {{
+    
+    /* Tombol Reset (Tetap warna HIJAU atau bisa disesuaikan) */
+    div.stButton > button[key="btn_reset"] {{
         background-color: #27AE60 !important; color: white !important;
         border-radius: 10px; font-weight: bold; border: none;
+    }}
+    
+    .tagline {{
+        color: #7f8c8d;
+        font-size: 1.1em;
+        text-align: center;
+        margin-top: -15px;
+        margin-bottom: 30px;
     }}
     </style>
     """, unsafe_allow_html=True)
 
-st.title("Skripi Affiliate")
-st.markdown('<p class="tagline">Rancang Skrip Video Viral & Auto-Cuan dalam Hitungan Detik</p>', unsafe_allow_html=True)
+# --- UI HEADER ---
+st.markdown("<h1 style='text-align: center;'>Skripi Konten</h1>", unsafe_allow_html=True)
+st.markdown("<p class='tagline'>Rancang Skrip Video Viral & Auto-Cuan dalam Hitungan Detik</p>", unsafe_allow_html=True)
+
 # --- INPUT AREA ---
 produk = st.text_input("📦 Nama Produk", key="produk")
-# MENU VALUE BARU
 value_produk = st.text_input("💎 Keunggulan / Value Produk", key="value_produk", placeholder="Contoh: Anti air, garansi 1 thn, bahan kulit asli")
 konteks = st.text_area("🎯 Konteks / Situasi", key="konteks")
 
@@ -90,12 +99,8 @@ with col3:
 
 # --- GENERATE LOGIC ---
 def generate_content():
-    if not produk:
-        st.warning("Isi nama produk!")
-        return
     st.session_state["sudah_klik"] = True
     try:
-        # Gaya bahasa disesuaikan otomatis berdasarkan target_usia di dalam prompt
         prompt = f"""Buat skrip affiliate {durasi} untuk {produk}. 
         Keunggulan Produk: {value_produk}.
         Konteks: {konteks}. 
@@ -131,7 +136,12 @@ def generate_content():
     except:
         st.error("Gagal generate!")
 
-st.button("Generate Skrip Viral ✨", on_click=generate_content)
+# Tombol Generate
+if st.button("Generate Skrip"):
+    if not produk:
+        st.warning("⚠️ Nama Produk wajib diisi!")
+    else:
+        generate_content()
 
 # --- TAMPILAN HASIL ---
 if 'hasil_ai' in st.session_state:
@@ -154,12 +164,13 @@ if 'hasil_ai' in st.session_state:
     st.markdown("<span class='label-box'>🎙️ teks voice over (salin disini)</span>", unsafe_allow_html=True)
     st.code(vo_text, language="text")
 
-    # Tombol Navigasi
+    # Tombol Navigasi (Warna dan Nama Baru)
     col_re, col_done = st.columns(2)
     with col_re:
         if st.button("🔄 Coba Ide Lain", key="btn_lagi", use_container_width=True):
             generate_content()
             st.rerun()
     with col_done:
-        if st.button("✅ Selesai & Reset", key="btn_selesai", use_container_width=True, on_click=reset_form):
+        # Nama diganti jadi Reset, fungsi reset_form tetap dipertahankan
+        if st.button("🗑️ Reset", key="btn_reset", use_container_width=True, on_click=reset_form):
             st.rerun()
