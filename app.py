@@ -20,15 +20,38 @@ try:
 except:
     st.error("API Key belum diset di Secrets!")
 
-# --- CUSTOM CSS ---
+# --- DYNAMIC COLORS ---
 if "sudah_klik" not in st.session_state:
     st.session_state["sudah_klik"] = False
 
 gen_bg = "#E74C3C" if st.session_state["sudah_klik"] else "#3498DB"
-gen_txt = "#000000" if st.session_state["sudah_klik"] else "#FFFFFF"
+gen_txt = "#FFFFFF"
 
+# --- CUSTOM CSS (OPTIMIZED) ---
 st.markdown(f"""
     <style>
+    /* Menghilangkan margin berlebih di atas */
+    .block-container {{
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }}
+    
+    .logo-container {{
+        display: flex;
+        justify-content: center;
+        margin-bottom: 0px;
+    }}
+
+    .tagline {{
+        color: #7f8c8d;
+        font-size: 1em;
+        text-align: center;
+        margin-top: -10px;
+        margin-bottom: 25px;
+        font-style: italic;
+        line-height: 1.4;
+    }}
+
     .box-container {{
         background-color: white; 
         padding: 20px; 
@@ -37,46 +60,9 @@ st.markdown(f"""
         margin-bottom: 20px; 
         color: #333;
         line-height: 1.8; 
-        font-family: sans-serif;
         white-space: pre-wrap; 
-        word-wrap: break-word;
     }}
-    /* Efek Logo Estetik */
-    .logo-container {{
-        display: flex;
-        justify-content: center;
-        transition: transform 0.3s ease;
-        filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.1));
-    }}
-    .logo-container:hover {{
-        transform: scale(1.05); /* Membesar sedikit saat hover */
-    }}
-    
-    /* Animasi Tagline */
-    .tagline {{
-        color: #7f8c8d;
-        font-size: 1.1em;
-        text-align: center;
-        margin-top: 10px;
-        margin-bottom: 30px;
-        font-style: italic;
-    }}
-    .footer {{
-        position: relative;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        text-align: center;
-        color: #95a5a6;
-        font-size: 0.8em;
-        padding: 20px 0px;
-        border-top: 1px solid #eee;
-        margin-top: 50px;
-    }}
-    /* Style khusus untuk tombol tutorial di pojok kanan */
-    .stPopover {{
-        text-align: right;
-    }}
+
     .label-box {{ 
         font-weight: bold; 
         text-transform: uppercase; 
@@ -86,114 +72,69 @@ st.markdown(f"""
         color: #444; 
     }}
 
-    /* Tombol Utama Generate */
+    /* Tombol Utama */
     div.stButton > button:first-child {{
         background-color: {gen_bg} !important;
         color: {gen_txt} !important;
         border-radius: 10px; font-weight: bold; height: 3.5em; width: 100%; border: none;
     }}
     
-    /* Tombol Coba Ide Lain (Sekarang warna BIRU) */
-    div.stButton > button[key="btn_lagi"] {{
-        background-color: #3498DB !important; color: white !important;
-        border-radius: 10px; font-weight: bold; border: none;
-    }}
-    
-    /* Tombol Reset (Tetap warna HIJAU atau bisa disesuaikan) */
-    div.stButton > button[key="btn_reset"] {{
-        background-color: #27AE60 !important; color: white !important;
-        border-radius: 10px; font-weight: bold; border: none;
-    }}
-    
-    .tagline {{
-        color: #7f8c8d;
-        font-size: 1.1em;
+    /* Tombol Navigasi Bawah */
+    div.stButton > button[key="btn_lagi"] {{ background-color: #3498DB !important; color: white !important; border-radius: 10px; }}
+    div.stButton > button[key="btn_reset"] {{ background-color: #27AE60 !important; color: white !important; border-radius: 10px; }}
+
+    .footer {{
         text-align: center;
-        margin-top: -15px;
-        margin-bottom: 30px;
+        color: #95a5a6;
+        font-size: 0.8em;
+        padding: 20px 0px;
+        border-top: 1px solid #eee;
+        margin-top: 40px;
     }}
     </style>
     """, unsafe_allow_html=True)
 
 # --- UI HEADER ---
-# Membuat grid untuk menaruh logo di tengah
-col_left, col_mid, col_right = st.columns([1, 2, 1])
+# Menampilkan Logo agar Center
+st.markdown('<div class="logo-container">', unsafe_allow_html=True)
+st.image("logo.png", width=180) # Ukuran 180px sangat ideal untuk mobile
+st.markdown('</div>', unsafe_allow_html=True)
 
-with col_mid:
-    # Menggunakan container HTML agar CSS tadi bisa bekerja
-    st.markdown('<div class="logo-container">', unsafe_allow_html=True)
-    st.image("logo.png", width=200) # Pastikan file gambar namanya logo.png
-    st.markdown('</div>', unsafe_allow_html=True)
+st.markdown("<p class='tagline'>\"Rancang Skrip Video Viral & Auto-Cuan<br>dalam Hitungan Detik\"</p>", unsafe_allow_html=True)
 
-# Tagline di bawah logo
-st.markdown("<p class='tagline'>\"Rancang Skrip Video Viral & Auto-Cuan dalam Hitungan Detik\"</p>", unsafe_allow_html=True)
-# --- MENU TUTORIAL (POJOK KANAN) ---
-col_judul, col_tutor = st.columns([4, 1])
-with col_tutor:
-    with st.popover("📖 TUTORIAL"):
+# Tutorial diletakkan di tengah
+col_tutor_center = st.columns([1, 2, 1])
+with col_tutor_center[1]:
+    with st.popover("📖 LIHAT TUTORIAL", use_container_width=True):
         st.markdown("### 💡 Panduan Penggunaan")
-        st.write("""
-        1. **📦 Nama Produk**: Isi nama barang yang ingin dijual.
-        2. **💎 Value**: Sebutkan kelebihan produk (misal: awet, murah).
-        3. **🎯 Konteks**: Ceritakan suasana video (misal: lagi di kantor).
-        4. **👥 Target Usia**: AI akan menyesuaikan gaya bahasa (Gaul vs Formal).
-        5. **🎬 Angle**: Pilih cara penyampaian konten yang kamu mau.
-        
-        *Klik **Generate** dan skrip siap digunakan!*
-        """)
+        st.write("1. **📦 Nama Produk**: Isi nama barang.")
+        st.write("2. **💎 Value**: Sebutkan kelebihan produk.")
+        st.write("3. **🎯 Konteks**: Ceritakan suasana video.")
+
 # --- INPUT AREA ---
+st.write("---")
 produk = st.text_input("📦 Nama Produk", key="produk")
-value_produk = st.text_input("💎 Keunggulan / Value Produk", key="value_produk", placeholder="Contoh: Anti air, garansi 1 thn, bahan kulit asli")
+value_produk = st.text_input("💎 Keunggulan / Value Produk", key="value_produk", placeholder="Contoh: Anti air, garansi 1 thn")
 konteks = st.text_area("🎯 Konteks / Situasi", key="konteks")
 
 col1, col2, col3 = st.columns(3)
 with col1:
-    target_usia = st.selectbox("👥 Target Usia", ["Gen Z", "Dewasa", "Orang Tua", "Umum"])
+    target_usia = st.selectbox("👥 Target", ["Gen Z", "Dewasa", "Umum"])
 with col2:
-    durasi = st.selectbox("⏱️ Durasi", ["20 detik", "30 detik", "45 detik", "60 detik"])
+    durasi = st.selectbox("⏱️ Durasi", ["30 detik", "60 detik"])
 with col3:
-    angle = st.selectbox("🎬 Angle Konten", ["Review Jujur", "Tips & Trik", "Eksperimen", "Storytelling"])
+    angle = st.selectbox("🎬 Angle", ["Review Jujur", "Storytelling"])
 
 # --- GENERATE LOGIC ---
 def generate_content():
     st.session_state["sudah_klik"] = True
     try:
-        prompt = f"""Buat skrip affiliate {durasi} untuk {produk}. 
-        Keunggulan Produk: {value_produk}.
-        Konteks: {konteks}. 
-        Target Usia: {target_usia}. 
-        Angle: {angle}.
-        
-        PENTING: Gunakan gaya bahasa dan kosa kata yang sangat sesuai untuk {target_usia}.
-        Wajib gunakan format vertikal ke bawah dengan jeda antar baris yang jelas. 
-        DILARANG MENGGUNAKAN TABEL.
-
-        Susun seperti ini:
-
-        BAGIAN VISUAL:
-        0-5 detik: [Instruksi kamera]
-        
-        5-10 detik: [Instruksi kamera]
-        
-        dst...
-
-        ---
-
-        BAGIAN VOICE OVER:
-        0-5 detik (Hook): [Teks narasi]
-        
-        5-10 detik: [Teks narasi]
-        
-        dst...
-
-        Berikan 1x enter (baris kosong) antar segmen waktu agar rapi."""
-        
+        prompt = f"Buat skrip affiliate {durasi} untuk {produk}. Keunggulan: {value_produk}. Konteks: {konteks}. Target: {target_usia}. Angle: {angle}. Gunakan bahasa sesuai target. Pisahkan BAGIAN VISUAL dan BAGIAN VOICE OVER dengan '---'."
         response = model.generate_content(prompt)
         st.session_state.hasil_ai = response.text
     except:
         st.error("Gagal generate!")
 
-# Tombol Generate
 if st.button("Generate Skrip"):
     if not produk:
         st.warning("⚠️ Nama Produk wajib diisi!")
@@ -203,8 +144,8 @@ if st.button("Generate Skrip"):
 # --- TAMPILAN HASIL ---
 if 'hasil_ai' in st.session_state:
     st.markdown("---")
-    
     res = st.session_state.hasil_ai
+    
     if "---" in res:
         parts = res.split("---")
         visual_text = parts[0].replace("BAGIAN VISUAL:", "").strip()
@@ -213,27 +154,24 @@ if 'hasil_ai' in st.session_state:
         visual_text = res
         vo_text = res
 
-    # Kotak Visual
     st.markdown("<span class='label-box'>📸 visual konten</span>", unsafe_allow_html=True)
     st.markdown(f"<div class='box-container'>{visual_text}</div>", unsafe_allow_html=True)
 
-    # Kotak Voice Over
-    st.markdown("<span class='label-box'>🎙️ teks voice over (salin disini)</span>", unsafe_allow_html=True)
+    st.markdown("<span class='label-box'>🎙️ teks voice over</span>", unsafe_allow_html=True)
     st.code(vo_text, language="text")
 
-    # Tombol Navigasi (Warna dan Nama Baru)
     col_re, col_done = st.columns(2)
     with col_re:
-        if st.button("🔄 Coba Ide Lain", key="btn_lagi", use_container_width=True):
+        if st.button("🔄 Coba Lagi", key="btn_lagi", use_container_width=True):
             generate_content()
             st.rerun()
     with col_done:
-        # Nama diganti jadi Reset, fungsi reset_form tetap dipertahankan
         if st.button("🗑️ Reset", key="btn_reset", use_container_width=True, on_click=reset_form):
             st.rerun()
-            # --- FOOTER (NAMA PEMBUAT) ---
+
+# --- FOOTER ---
 st.markdown("""
     <div class="footer">
-        <p>Built with ❤️ by <b>[Cerita Ozi]</b> | © 2026 Skripi Konten Team</p>
+        <p>Built with ❤️ by <b>Cerita Ozi</b> | © 2026 Skripi Konten Team</p>
     </div>
     """, unsafe_allow_html=True)
