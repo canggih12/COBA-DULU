@@ -21,8 +21,8 @@ st.markdown("""
     .stButton>button {
         border-radius: 10px;
         font-weight: bold;
-        color: red;
-        text-color: Black;
+        background-color: blue;
+        text-color: white;
     }
     </style>
     """, unsafe_allow_html=True)
