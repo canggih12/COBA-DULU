@@ -170,7 +170,36 @@ with col3:
 def generate_content():
     st.session_state["sudah_klik"] = True
     try:
-        prompt = f"Buat skrip affiliate {durasi} untuk {produk}. Keunggulan: {value_produk}. Konteks: {konteks}. Target: {target_usia}. Angle: {angle}. Gunakan bahasa sesuai target. Pisahkan BAGIAN VISUAL dan BAGIAN VOICE OVER dengan '---'."
+                prompt = f"""Buat skrip affiliate {durasi} untuk {produk}. 
+        Keunggulan Produk: {value_produk}.
+        Konteks: {konteks}. 
+        Target Usia: {target_usia}. 
+        Angle: {angle}.
+        
+        PENTING: Gunakan gaya bahasa dan kosa kata yang sangat sesuai untuk {target_usia}.
+        Wajib gunakan format vertikal ke bawah dengan jeda antar baris yang jelas. 
+        DILARANG MENGGUNAKAN TABEL.
+
+        Susun seperti ini:
+
+        BAGIAN VISUAL:
+        0-5 detik: [Instruksi kamera]
+        
+        5-10 detik: [Instruksi kamera]
+        
+        dst...
+
+        ---
+
+        BAGIAN VOICE OVER:
+        0-5 detik (Hook): [Teks narasi]
+        
+        5-10 detik: [Teks narasi]
+        
+        dst...
+
+        Berikan 1x enter (baris kosong) antar segmen waktu agar rapi."""
+        
         response = model.generate_content(prompt)
         st.session_state.hasil_ai = response.text
     except:
@@ -185,8 +214,8 @@ if st.button("Generate Skrip"):
 # --- TAMPILAN HASIL ---
 if 'hasil_ai' in st.session_state:
     st.markdown("---")
-    res = st.session_state.hasil_ai
     
+    res = st.session_state.hasil_ai
     if "---" in res:
         parts = res.split("---")
         visual_text = parts[0].replace("BAGIAN VISUAL:", "").strip()
@@ -195,11 +224,14 @@ if 'hasil_ai' in st.session_state:
         visual_text = res
         vo_text = res
 
+    # Kotak Visual
     st.markdown("<span class='label-box'>📸 visual konten</span>", unsafe_allow_html=True)
     st.markdown(f"<div class='box-container'>{visual_text}</div>", unsafe_allow_html=True)
 
-    st.markdown("<span class='label-box'>🎙️ teks voice over</span>", unsafe_allow_html=True)
+    # Kotak Voice Over
+    st.markdown("<span class='label-box'>🎙️ teks voice over (salin disini)</span>", unsafe_allow_html=True)
     st.code(vo_text, language="text")
+
 
     col_re, col_done = st.columns(2)
     with col_re:
