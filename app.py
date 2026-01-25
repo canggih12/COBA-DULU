@@ -7,7 +7,7 @@ st.set_page_config(page_title="Affiliate Genie AI", page_icon="🪄")
 # --- SIDEBAR: Setting API Key ---
 with st.sidebar:
     st.title("Pengaturan")
-    api_key = st.text_input("Masukkan Gemini API Key:", type="password")
+    api_key = "AIzaSyCaSLrhJgnx6Ok5RKItn1pCf4zyPcA45Ds"
     st.info("Dapatkan API Key di Google AI Studio")
 
 # --- MAIN UI ---
