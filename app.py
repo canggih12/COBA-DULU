@@ -126,12 +126,6 @@ st.markdown(f"""
     """, unsafe_allow_html=True)
 
 # --- UI HEADER ---
-# Logo Center (Menggunakan baris tunggal agar CSS bekerja maksimal)
-st.markdown(img_to_html("logo.png"), unsafe_allow_html=True)
-
-# Tagline Center
-st.markdown("<p class='tagline'>\"Rancang Skrip Video Viral & Auto-Cuan<br>dalam Hitungan Detik\"</p>", unsafe_allow_html=True)
-
 # Tutorial di Kiri (Button Kecil)
 col_tutor, col_empty = st.columns([1, 3]) # Kolom kecil di kiri, sisanya kosong
 with col_tutor:
@@ -146,7 +140,11 @@ with col_tutor:
         
         *Klik **Generate** dan skrip siap digunakan!*
         """)
+# Logo Center (Menggunakan baris tunggal agar CSS bekerja maksimal)
+st.markdown(img_to_html("logo.png"), unsafe_allow_html=True)
 
+# Tagline Center
+st.markdown("<p class='tagline'>\"Rancang Skrip Video Viral & Auto-Cuan<br>dalam Hitungan Detik\"</p>", unsafe_allow_html=True)
 # --- INPUT AREA ---
 produk = st.text_input("📦 Nama Produk", key="produk")
 value_produk = st.text_input("💎 Keunggulan / Value Produk", key="value_produk", placeholder="Contoh: Anti air, garansi 1 thn")
