@@ -241,7 +241,9 @@ if 'hasil_ai' in st.session_state:
         if st.button("🗑️ Reset", key="btn_reset", use_container_width=True, on_click=reset_form):
             st.rerun()
 
-# --- FOOTER ---
-st.markdown("""
+# --- FOOTER (VERSI AMAN) ---
+    st.markdown("""
     <div class="footer">
-        <p>Built with <span style="color: #e74c3c;">&hearts;</span> by <b>Cerita Ozi</b> | &copy; 2026 Skripi Konten Team</p></div> """, unsafe_allow_html=True)
+        <p>Built with <span style="color: #e74c3c;">&hearts;</span> by <b>Cerita Ozi</b> | &copy; 2026 Skripi Konten Team</p>
+    </div>
+    """, unsafe_allow_html=True)
