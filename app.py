@@ -10,7 +10,7 @@ def get_base64_of_bin_file(bin_file):
 def img_to_html(img_file):
     img_base64 = get_base64_of_bin_file(img_file)
     # Di sini kita kunci alignment-nya di tengah lewat HTML
-    html_code = f'<div style="display: flex; justify-content: center; width: 100%;"><img src="data:image/png;base64,{img_base64}" width="250"></div>'
+    html_code = f'<div style="display: flex; justify-content: center; width: 100%;"><img src="data:image/png;base64,{img_base64}" width="300"></div>'
     return html_code
 
 # Konfigurasi Halaman
@@ -56,7 +56,7 @@ st.markdown(f"""
 
     .tagline {{
         color: #7f8c8d;
-        font-size: 10px;
+        font-size: 5px;
         text-align: center;
         margin-top: -10px;
         margin-bottom: 25px;
