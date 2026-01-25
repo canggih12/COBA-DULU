@@ -1,5 +1,17 @@
 import streamlit as st
 import google.generativeai as genai
+import base64
+
+def get_base64_of_bin_file(bin_file):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+def img_to_html(img_file):
+    img_base64 = get_base64_of_bin_file(img_file)
+    # Di sini kita kunci alignment-nya di tengah lewat HTML
+    html_code = f'<div style="display: flex; justify-content: center; width: 100%;"><img src="data:image/png;base64,{img_base64}" width="200"></div>'
+    return html_code
 
 # Konfigurasi Halaman
 st.set_page_config(page_title="SKRIPI KONTEN", page_icon="🪄", layout="centered")
@@ -115,7 +127,7 @@ st.markdown(f"""
 
 # --- UI HEADER ---
 # Logo Center (Menggunakan baris tunggal agar CSS bekerja maksimal)
-st.image("logo.png", width=250)
+st.markdown(img_to_html("logo.png"), unsafe_allow_html=True)
 
 # Tagline Center
 st.markdown("<p class='tagline'>\"Rancang Skrip Video Viral & Auto-Cuan<br>dalam Hitungan Detik\"</p>", unsafe_allow_html=True)
