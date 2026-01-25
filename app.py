@@ -88,7 +88,7 @@ def generate_content():
     st.session_state["sudah_klik"] = True
     try:
         # Prompt dipertegas untuk pemisahan baris per durasi
-        prompt = f"""Buat skrip affiliate {durasi} untuk {produk}. Konteks: {konteks}. Target Usia: {Terget_Usia}. Angle: {angle}.
+        prompt = f"""Buat skrip affiliate {durasi} untuk {produk}. Konteks: {konteks}. Target Usia: {target_usia}. Angle: {angle}.
         Wajib gunakan format list vertikal ke bawah seperti ini:
 
         BAGIAN VISUAL:
