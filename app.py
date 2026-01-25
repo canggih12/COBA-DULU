@@ -88,7 +88,7 @@ def generate_content():
     st.session_state["sudah_klik"] = True
     try:
         # Prompt dipertegas untuk pemisahan baris per durasi
-        prompt = f"""Buat skrip affiliate {durasi} untuk {produk}. Konteks: {konteks}. Angle: {angle}.
+        prompt = f"""Buat skrip affiliate {durasi} untuk {produk}. Konteks: {konteks}. Target Usia: {Terget_Usia}. Angle: {angle}.
         Wajib gunakan format list vertikal ke bawah seperti ini:
 
         BAGIAN VISUAL:
@@ -130,7 +130,7 @@ if 'hasil_ai' in st.session_state:
     st.markdown(f"<div class='box-container'>{visual_text}</div>", unsafe_allow_html=True)
 
     # Kotak Voice Over
-    st.markdown("<span class='label-box'>🎙️ teks voice over (salin disini)</span>", unsafe_allow_html=True)
+    st.markdown("<span class='label-box'>🎙️ teks voice over</span>", unsafe_allow_html=True)
     st.code(vo_text, language="text")
 
     # Tombol Navigasi
