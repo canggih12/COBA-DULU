@@ -53,6 +53,10 @@ st.markdown(f"""
         border-top: 1px solid #eee;
         margin-top: 50px;
     }}
+    /* Style khusus untuk tombol tutorial di pojok kanan */
+    .stPopover {{
+        text-align: right;
+    }}
     .label-box {{ 
         font-weight: bold; 
         text-transform: uppercase; 
@@ -94,7 +98,20 @@ st.markdown(f"""
 # --- UI HEADER ---
 st.markdown("<h1 style='text-align: center;'>Skripi Konten</h1>", unsafe_allow_html=True)
 st.markdown("<p class='tagline'>Rancang Skrip Video Viral & Auto-Cuan dalam Hitungan Detik</p>", unsafe_allow_html=True)
-
+# --- MENU TUTORIAL (POJOK KANAN) ---
+col_judul, col_tutor = st.columns([4, 1])
+with col_tutor:
+    with st.popover("📖 Info"):
+        st.markdown("### 💡 Panduan Penggunaan")
+        st.write("""
+        1. **📦 Nama Produk**: Isi nama barang yang ingin dijual.
+        2. **💎 Value**: Sebutkan kelebihan produk (misal: awet, murah).
+        3. **🎯 Konteks**: Ceritakan suasana video (misal: lagi di kantor).
+        4. **👥 Target Usia**: AI akan menyesuaikan gaya bahasa (Gaul vs Formal).
+        5. **🎬 Angle**: Pilih cara penyampaian konten yang kamu mau.
+        
+        *Klik **Generate** dan skrip siap digunakan!*
+        """)
 # --- INPUT AREA ---
 produk = st.text_input("📦 Nama Produk", key="produk")
 value_produk = st.text_input("💎 Keunggulan / Value Produk", key="value_produk", placeholder="Contoh: Anti air, garansi 1 thn, bahan kulit asli")
