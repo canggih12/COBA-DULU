@@ -176,6 +176,10 @@ with col_tutor:
         3. **🎯 Konteks**: Ceritakan suasana video (misal: lagi di kantor).
         4. **👥 Target Usia**: Tentukan target usia agar bahasa yang digunakan sesuai.
         5. **🎬 Angle**: Pilih cara penyampaian konten yang kamu mau.
+        # Kenapa Harus Input Gemini Api Key ?
+        - Agar Pembuatan Skrip Berjalan Lancar Tanpa Limit
+        + Jika Kamu Belum Tau Cara membuat Api Key klik https://aistudio.google.com/
+        + Setelah Mendapatkan Api Key Langsung Masukkan Di Pengaturan 
         
         *Klik **Generate** dan skrip siap digunakan!*
         """)
