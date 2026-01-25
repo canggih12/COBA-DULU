@@ -261,11 +261,20 @@ if 'hasil_ai' in st.session_state:
     st.code(vo_text, language="text")
 
     # Tombol Navigasi (Warna dan Nama Baru)
-    col_re, col_done = st.columns(2)
     with col_re:
+        # Saat tombol diklik, langsung jalankan fungsi generate baru
         if st.button("🔄 COBA IDE LAIN", key="btn_lagi", use_container_width=True):
-            generate_content()
-            st.rerun()
+            loading_place = st.empty()
+            with loading_place.container():
+                st.markdown('<p class="loading-text">Mencari ide baru... Mohon tunggu.</p>', unsafe_allow_html=True)
+                st.image("https://i.gifer.com/ZZ5H.gif", width=80)
+                
+                # JALANKAN GENERATE SEBELUM RERUN
+                generate_content() 
+            
+            loading_place.empty()
+            st.rerun() # Refresh halaman untuk nampilin hasil baru
+    
     with col_done:
         if st.button("🗑️ RESET", key="btn_reset", use_container_width=True, on_click=reset_form):
             st.rerun()
