@@ -110,7 +110,7 @@ st.markdown(f"""
         color: #444; 
     }}
     /* Gaya Khusus Tombol Reset */
-    div.stButton2 > button[key="btn_reset"] {{
+    div.stButton > button[key="btn_reset"] {{
         background-color: #E74C3C !important; /* Warna Merah */
         color: white !important;               /* Teks Putih */
         font-weight: bold !important;          /* Teks Tebal */
@@ -120,7 +120,7 @@ st.markdown(f"""
     }}
 
     /* Efek Hover (Saat kursor di atas tombol) */
-    div.stButton2 > button[key="btn_reset"]:hover {{
+    div.stButton > button[key="btn_reset"]:hover {{
         background-color: #C0392B !important; /* Merah Lebih Gelap saat ditekan */
         color: white !important;
     }}
@@ -255,7 +255,7 @@ if 'hasil_ai' in st.session_state:
             generate_content()
             st.rerun()
     with col_done:
-        if st.button2("🗑️ Reset", key="btn_reset", use_container_width=True, on_click=reset_form):
+        if st.button("🗑️ Reset", key="btn_reset", use_container_width=True, on_click=reset_form):
             st.rerun()
             # --- FOOTER (NAMA PEMBUAT) ---
 st.markdown("""
