@@ -63,7 +63,7 @@ st.markdown(f"""
 
     .tagline {{
         color: #7f8c8d;
-        font-size: 0,5 em;
+        font-size: 0.5em;
         text-align: center;
         margin-top: -10px;
         margin-bottom: 25px;
@@ -198,7 +198,7 @@ def generate_content():
         
         dst...
 
-        Berikan 1x enter (baris kosong) antar segmen waktu agar rapi.""
+        Berikan 1x enter (baris kosong) antar segmen waktu agar rapi."""
         response = model.generate_content(prompt)
         st.session_state.hasil_ai = response.text
     except:
