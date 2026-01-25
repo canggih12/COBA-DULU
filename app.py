@@ -35,8 +35,8 @@ with st.sidebar:
         try:
             # Konfigurasi library Gemini dengan key dari user
             genai.configure(api_key=api_key_input)
-            # Inisialisasi model (gunakan 1.5 Flash agar cepat dan hemat kuota)
-            model = genai.GenerativeModel('gemini-1.5-flash')
+            # Inisialisasi model (gunakan gemini-3)
+            model = genai.GenerativeModel('gemini-3-flash-preview')
             
             # Test kecil untuk memastikan key valid
             # (opsional, tapi bagus untuk validasi instan)
