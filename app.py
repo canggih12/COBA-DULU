@@ -25,7 +25,7 @@ if st.button("Generate Ide Konten ✨"):
     else:
         try:
             genai.configure(api_key=api_key)
-            model = genai.GenerativeModel('gemini-1.5-flash')
+            model = genai.GenerativeModel('gemini-1.5-flash-latest')
             
             prompt = f"""
             Kamu adalah ahli copywriting affiliate TikTok dan Instagram. 
