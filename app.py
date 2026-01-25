@@ -160,11 +160,11 @@ konteks = st.text_area("🎯 Konteks / Situasi", key="konteks")
 
 col1, col2, col3 = st.columns(3)
 with col1:
-    target_usia = st.selectbox("👥 Target", ["Gen Z", "Dewasa", "Umum"])
+    target_usia = st.selectbox("👥 Target", ["17-24 tahun", "24-35 tahun", "35-45 tahun", "17-50 tahun"])
 with col2:
-    durasi = st.selectbox("⏱️ Durasi", ["30 detik", "60 detik"])
+    durasi = st.selectbox("⏱️ Durasi", ["20 detik", "30 detik", "45 detik", "60 detik"])
 with col3:
-    angle = st.selectbox("🎬 Angle", ["Review Jujur", "Storytelling"])
+    angle = st.selectbox("🎬 Angle", ["Review Jujur", "Eksperimen", "Tips & Trik", "Storytelling"])
 
 # --- GENERATE LOGIC ---
 def generate_content():
