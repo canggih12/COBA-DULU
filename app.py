@@ -123,11 +123,17 @@ st.markdown("<p class='tagline'>\"Rancang Skrip Video Viral & Auto-Cuan<br>dalam
 # Tutorial di Kiri (Button Kecil)
 col_tutor, col_empty = st.columns([1, 3]) # Kolom kecil di kiri, sisanya kosong
 with col_tutor:
-    with st.popover("📖 TUTORIAL"):
+    with st.popover("📖 Tutorial")
         st.markdown("### 💡 Panduan Penggunaan")
-        st.write("1. **📦 Produk**: Isi nama barang.")
-        st.write("2. **💎 Value**: Kelebihan produk.")
-        st.write("3. **🎯 Konteks**: Suasana video.")
+        st.write("""
+        1. **📦 Nama Produk**: Isi nama barang yang ingin dijual.
+        2. **💎 Value**: Sebutkan kelebihan produk (misal: awet, murah).
+        3. **🎯 Konteks**: Ceritakan suasana video (misal: lagi di kantor).
+        4. **👥 Target Usia**: AI akan menyesuaikan gaya bahasa (Gaul vs Formal).
+        5. **🎬 Angle**: Pilih cara penyampaian konten yang kamu mau.
+        
+        *Klik **Generate** dan skrip siap digunakan!*
+        """)
 
 # --- INPUT AREA ---
 st.write("---")
