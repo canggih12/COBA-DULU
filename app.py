@@ -60,7 +60,7 @@ st.markdown(f"""
         border-radius: 10px; font-weight: bold; border: none;
     }}
     div.stButton > button[key="btn_selesai"] {{
-        background-color: #27AE60 !important; color: white !important;
+        background-color: #7FFFD4 !important; color: white !important;
         border-radius: 10px; font-weight: bold; border: none;
     }}
     </style>
