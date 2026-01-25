@@ -136,7 +136,6 @@ with col_tutor:
         """)
 
 # --- INPUT AREA ---
-st.write("---")
 produk = st.text_input("📦 Nama Produk", key="produk")
 value_produk = st.text_input("💎 Keunggulan / Value Produk", key="value_produk", placeholder="Contoh: Anti air, garansi 1 thn")
 konteks = st.text_area("🎯 Konteks / Situasi", key="konteks")
