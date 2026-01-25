@@ -2,7 +2,7 @@ import streamlit as st
 import google.generativeai as genai
 
 # Konfigurasi Halaman
-st.set_page_config(page_title="Affiliate Genie Pro", page_icon="🪄", layout="centered")
+st.set_page_config(page_title="Skripi Affiliate", page_icon="🪄", layout="centered")
 
 # --- FUNGSI RESET ---
 def reset_form():
@@ -67,7 +67,8 @@ st.markdown(f"""
     </style>
     """, unsafe_allow_html=True)
 
-st.title("🪄 Affiliate Genie Pro")
+st.title("Skripi Affiliate")
+st.title("<p class='tagline'>Rancang Skrip Video Viral & Auto-Cuan dalam Hitungan Detik</p>", unsafe_allow_html=True)
 
 # --- INPUT AREA ---
 produk = st.text_input("📦 Nama Produk", key="produk")
