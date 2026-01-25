@@ -236,18 +236,18 @@ def generate_content():
         BAGIAN VISUAL:
         0-5 detik: [Instruksi kamera]
         
+        BAGIAN VOICE OVER
+        0-5 detik (hook): [Teks narasi]
+
+        BAGIAN VISUAL
         5-10 detik: [Instruksi kamera]
-        
-        dst...
 
-        ---
-
-        BAGIAN VOICE OVER:
-        0-5 detik (Hook): [Teks narasi]
-        
+        BAGIAN VOICE OVER
         5-10 detik: [Teks narasi]
         
         dst...
+
+    
 
         Berikan 1x enter (baris kosong) antar segmen waktu agar rapi."""
         
