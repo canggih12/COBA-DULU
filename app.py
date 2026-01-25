@@ -68,10 +68,10 @@ st.markdown(f"""
     }}
     </style>
     """, unsafe_allow_html=True)
-<p style="text-align: center;">
+
 st.title("Skripi Affiliate")
-st.caption("Rancang Skrip Video Viral & Auto-Cuan dalam Hitungan Detik")
-</p>
+st.caption<p.style="text-align: center;">("Rancang Skrip Video Viral & Auto-Cuan dalam Hitungan Detik")</p>
+
 # --- INPUT AREA ---
 produk = st.text_input("📦 Nama Produk", key="produk")
 # MENU VALUE BARU
