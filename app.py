@@ -244,6 +244,6 @@ if 'hasil_ai' in st.session_state:
 # --- FOOTER ---
 st.markdown("""
     <div class="footer">
-        <p>Built with ❤️ by <b>Cerita Ozi</b> | &copy; 2026 Skripi Konten Team</p>
+        <p>Built with <span style="color: #e74c3c;">&hearts;</span> by <b>Cerita Ozi</b> | &copy; 2026 Skripi Konten Team</p>
     </div>
     """, unsafe_allow_html=True)
