@@ -151,7 +151,7 @@ with col_tutor:
 st.markdown(img_to_html("logo.png"), unsafe_allow_html=True)
 
 # Tagline Center
-st.markdown("<p class='tagline'>\"Rancang Skrip Video Viral & Auto-Cuan<br>dalam Hitungan Detik\"</p>", unsafe_allow_html=True)
+st.markdown("<p class='tagline'>\"Rancang Skrip Video Viral & Auto-Cuan\"</p>", unsafe_allow_html=True)
 st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
 # --- INPUT AREA ---
 produk = st.text_input("📦 Nama Produk", key="produk")
