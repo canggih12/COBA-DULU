@@ -72,8 +72,8 @@ st.markdown(f"""
     }}
     /* Garis pembatas tipis dengan jarak yang bisa diatur */
     .custom-divider {{
-        margin-top: 5px;    /* Atur jarak atas garis */
-        margin-bottom: 5px; /* Atur jarak bawah garis ke input area */
+        margin-top: 3px;    /* Atur jarak atas garis */
+        margin-bottom: 10px; /* Atur jarak bawah garis ke input area */
         border-bottom: 1px solid #eee; /* Warna abu-abu tipis */
         width: 100%;
     }}
