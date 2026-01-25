@@ -16,65 +16,79 @@ st.markdown("""
         box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         color: #333;
         white-space: pre-wrap;
+        margin-bottom: 20px;
     }
-    .stTextArea textarea { border-radius: 10px; }
+    .stButton>button {
+        border-radius: 10px;
+        font-weight: bold;
+    }
     </style>
     """, unsafe_allow_html=True)
 
 st.title("🪄 Affiliate Genie Pro")
-st.write("Sekarang AI akan mengikuti kemauan dan situasi produkmu!")
 
 # --- AREA INPUT ---
+with st.sidebar:
+    st.header("Konfigurasi API")
+    api_key = st.text_input("Gemini API Key", type="password")
+    st.divider()
+    st.info("Tips: Masukkan konteks spesifik agar AI tidak melantur.")
+
 with st.container():
-    api_key = st.sidebar.text_input("Gemini API Key", type="password")
-    
-    produk = st.text_input("Nama Produk", placeholder="Contoh: Lap Microfiber Premium")
-    
-    # FITUR BARU: KONTEKS PRODUK
-    konteks = st.text_area("Situasi / Kegunaan Spesifik (Opsional)", 
-                           placeholder="Contoh: Fokus untuk bersihin dashboard mobil yang berdebu parah, atau untuk ngeringin piring di dapur tanpa ninggalin serat.")
+    produk = st.text_input("Nama Produk", placeholder="Contoh: Lampu Tidur Proyektor")
+    konteks = st.text_area("Konteks/Kegunaan Spesifik", placeholder="Misal: Fokus buat kado ulang tahun anak atau buat dekorasi kamar estetik.")
     
     col1, col2, col3 = st.columns(3)
     with col1:
-        # FITUR BARU: ANGLE KONTEN
-        angle = st.selectbox("Angle Konten", ["Eksperimen/Tes", "Review Jujur", "Tips & Trik", "Storytelling", "Unboxing"])
-    with col2:
         target_usia = st.selectbox("Target Usia", ["Gen Z", "Dewasa", "Orang Tua", "Umum"])
-    with col3:
+    with col2:
         durasi = st.selectbox("Durasi", ["20 detik", "30 detik", "45 detik", "60 detik"])
+    with col3:
+        angle = st.selectbox("Angle Konten", ["Review Jujur", "Tips & Trik", "Eksperimen", "Storytelling"])
 
-# --- LOGIKA GENERATE ---
-if st.button("Generate Skrip Sesuai Keinginan ✨"):
+# --- FUNGSI GENERATE ---
+def generate_content():
     if not api_key or not produk:
         st.warning("Nama Produk dan API Key wajib diisi!")
-    else:
-        try:
-            genai.configure(api_key=api_key)
-            model = genai.GenerativeModel('gemini-3-flash-preview')
-            
-            prompt = f"""
-            Tugas: Buat skrip affiliate video pendek (TikTok/Shopee).
-            Produk: {produk}
-            Konteks Spesifik: {konteks if konteks else 'Umum'}
-            Angle Konten: {angle}
-            Target Usia: {target_usia}
-            Durasi Target: {durasi}
+        return
+    
+    try:
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel('gemini-3-flash-preview')
+        
+        prompt = f"""
+        Buat skrip affiliate {durasi} untuk {produk}.
+        Konteks: {konteks if konteks else 'Umum'}
+        Angle: {angle} | Target: {target_usia}
+        
+        WAJIB:
+        1. Hook yang kuat di awal.
+        2. Masalah & Solusi sesuai konteks.
+        3. CTA: "Klik keranjang di pojok kiri bawah sekarang juga!"
+        4. Berikan variasi kata-kata yang berbeda dari sebelumnya.
+        """
+        
+        with st.spinner('Meracik ide baru...'):
+            response = model.generate_content(prompt)
+            st.session_state.hasil_ai = response.text
+    except Exception as e:
+        st.error(f"Error: {e}")
 
-            Instruksi Khusus:
-            1. Jika ada 'Konteks Spesifik', fokuslah pada situasi tersebut. Jangan bahas kegunaan lain yang tidak relevan.
-            2. Sesuaikan pembukaan video dengan 'Angle Konten' {angle}.
-            3. Struktur: HOOK (detik 1-3), MASALAH yang sesuai konteks, SOLUSI (keunggulan produk), dan CTA wajib "Klik keranjang di pojok kiri bawah sekarang!".
-            4. Gunakan bahasa yang relate dengan {target_usia}.
-            """
-            
-            with st.spinner('Menyesuaikan skrip dengan pikiranmu...'):
-                response = model.generate_content(prompt)
-                st.markdown(f"### 🎬 Skrip {angle} ({durasi})")
-                st.markdown(f"""<div class="result-card">{response.text}</div>""", unsafe_allow_html=True)
-                st.balloons()
-                
-        except Exception as e:
-            st.error(f"Error: {e}")
+# --- TOMBOL UTAMA ---
+if st.button("Generate Skrip Viral ✨", use_container_width=True):
+    generate_content()
 
-st.markdown("---")
-st.caption("Gunakan kolom 'Situasi' untuk membedakan skrip satu produk yang punya banyak fungsi.")
+# --- TAMPILAN HASIL ---
+if 'hasil_ai' in st.session_state:
+    st.markdown("---")
+    st.markdown(f"### 🎬 Hasil Skrip ({angle})")
+    st.markdown(f"""<div class="result-card">{st.session_state.hasil_ai}</div>""", unsafe_allow_html=True)
+    
+    # TOMBOL GENERATE LAGI DI BAWAH HASIL
+    col_left, col_right = st.columns([1, 1])
+    with col_left:
+        if st.button("🔄 Coba Ide Lain", use_container_width=True):
+            generate_content()
+            st.rerun() # Refresh untuk menampilkan hasil baru
+    with col_right:
+        st.button("✅ Selesai", use_container_width=True, type="primary")
