@@ -19,56 +19,100 @@ try:
 except Exception as e:
     st.error("Pastikan GEMINI_API_KEY sudah diset di Streamlit Secrets!")
 
-# --- DYNAMIC CSS ---
+# --- DYNAMIC CSS (OPTIMIZED) ---
 if "sudah_klik" not in st.session_state:
     st.session_state["sudah_klik"] = False
 
-# Logika Warna Tombol
-btn_bg = "#E74C3C" if st.session_state["sudah_klik"] else "#3498DB"  # Merah jika sudah, Biru jika belum
-btn_txt = "#000000" if st.session_state["sudah_klik"] else "#FFFFFF" # Hitam jika sudah, Putih jika belum
+btn_bg = "#E74C3C" if st.session_state["sudah_klik"] else "#3498DB"
+btn_txt = "#000000" if st.session_state["sudah_klik"] else "#FFFFFF"
 
 st.markdown(f"""
     <style>
+    /* Mengatur Font Global */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+    html, body, [class*="st-"] {{
+        font-family: 'Inter', sans-serif;
+    }}
+    
+    /* Main Container */
+    .main {{ background-color: #fcfcfc; }}
+    
+    /* Tombol Utama */
     .stButton>button {{
         background-color: {btn_bg} !important;
         color: {btn_txt} !important;
-        border-radius: 10px;
-        font-weight: bold;
-        transition: 0.3s;
+        border-radius: 12px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
         border: none;
-        height: 3em;
+        height: 3.5em;
         width: 100%;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }}
+    
+    /* Kartu Output Voice Over */
     .vo-card {{
-        background-color: #f0f7ff; padding: 20px; border-radius: 12px;
-        border-left: 5px solid #3498db; margin-bottom: 15px;
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 16px;
+        border-top: 6px solid #3498db;
+        box-shadow: 0 10px 30px rgba(52, 152, 219, 0.1);
+        margin-bottom: 25px;
+        color: #2c3e50;
     }}
+    
+    /* Kartu Output Visual */
     .visual-card {{
-        background-color: #fff5f5; padding: 20px; border-radius: 12px;
-        border-left: 5px solid #e74c3c;
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 16px;
+        border-top: 6px solid #e74c3c;
+        box-shadow: 0 10px 30px rgba(231, 76, 60, 0.1);
+        margin-bottom: 25px;
+        color: #2c3e50;
     }}
+    
+    /* Label Tag Style */
     .label-tag {{
-        font-weight: bold; text-transform: uppercase; font-size: 0.8em; margin-bottom: 5px; display: block;
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 8px;
+        font-size: 0.75em;
+        font-weight: 800;
+        margin-bottom: 12px;
+        color: white;
+    }}
+    
+    /* Text Area & Input Styling */
+    .stTextArea textarea, .stTextInput input {{
+        border-radius: 12px !important;
+        border: 1px solid #e0e0e0 !important;
     }}
     </style>
     """, unsafe_allow_html=True)
 
-st.title("🪄 Affiliate Genie Pro")
+# --- UI HEADER ---
+st.markdown("<h1 style='text-align: center;'>🪄 Affiliate Genie Pro</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #7f8c8d;'>Rancang konten video viral dalam hitungan detik</p>", unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
 
 # --- AREA INPUT ---
 with st.container():
-    produk = st.text_input("Nama Produk", key="produk", placeholder="Contoh: Blender Portable")
-    konteks = st.text_area("Konteks/Kegunaan Spesifik", key="konteks", placeholder="Misal: Fokus buat bikin smoothie di kantor.")
+    produk = st.text_input("📦 Nama Produk", key="produk", placeholder="Apa produk yang mau kamu jual?")
+    konteks = st.text_area("🎯 Konteks / Situasi", key="konteks", placeholder="Ceritakan situasinya (misal: buat kado, buat bersihin noda, dll)")
     
     col1, col2, col3 = st.columns(3)
     with col1:
-        target_usia = st.selectbox("Target Usia", ["Gen Z", "Dewasa", "Orang Tua", "Umum"])
+        target_usia = st.selectbox("👥 Target Usia", ["Gen Z", "Dewasa", "Orang Tua", "Umum"])
     with col2:
-        durasi = st.selectbox("Durasi", ["20 detik", "30 detik", "45 detik", "60 detik"])
+        durasi = st.selectbox("⏱️ Durasi", ["20 detik", "30 detik", "45 detik", "60 detik"])
     with col3:
-        angle = st.selectbox("Angle", ["Review Jujur", "Tips & Trik", "Eksperimen", "Storytelling"])
+        angle = st.selectbox("🎬 Angle", ["Review Jujur", "Tips & Trik", "Eksperimen", "Storytelling"])
 
-# --- FUNGSI GENERATE ---
+st.markdown("<br>", unsafe_allow_html=True)
+
+# --- LOGIKA GENERATE ---
 def generate_content():
     if not produk:
         st.warning("Nama Produk wajib diisi!")
@@ -76,49 +120,56 @@ def generate_content():
     
     st.session_state["sudah_klik"] = True
     try:
-        prompt = f"""Buat skrip affiliate {durasi} untuk {produk}. Konteks: {konteks}. 
-        Angle: {angle} | Target: {target_usia}.
+        prompt = f"""
+        Buat skrip affiliate video pendek ({durasi}) untuk produk: {produk}.
+        Konteks Spesifik: {konteks}.
+        Angle Konten: {angle} | Target Audiens: {target_usia}.
         
-        Pisahkan output menjadi 2 bagian:
-        1. VOICE OVER: Berisi narasi teks yang harus dibacakan (bahasa santai/relate).
-        2. VISUAL: Berisi instruksi apa yang harus direkam/ditampilkan di layar.
+        WAJIB Pisahkan menjadi dua bagian utama:
+        1. [VOICE OVER]: Narasi teks yang diucapkan. Gunakan bahasa yang {target_usia} banget. Masukkan CTA: "Klik keranjang di pojok kiri bawah sekarang!".
+        2. [VISUAL]: Panduan adegan/visual per detik agar sesuai dengan narasi.
+        """
         
-        WAJIB CTA di akhir Voice Over: "Klik keranjang di pojok kiri bawah sekarang juga!"."""
-        
-        with st.spinner('Meracik ide...'):
+        with st.spinner('Magic is happening...'):
             response = model.generate_content(prompt)
-            # Logika sederhana memisahkan teks (asumsi AI memberikan pemisah)
             st.session_state.hasil_ai = response.text
     except Exception as e:
-        st.error(f"Error: {e}")
+        st.error(f"Gagal memanggil jin AI: {e}")
 
 # Tombol Generate
-st.button("Generate Skrip Viral ✨", on_click=generate_content)
+st.button("RACIK SKRIP VIRAL ✨", on_click=generate_content)
 
 # --- TAMPILAN HASIL ---
 if 'hasil_ai' in st.session_state:
-    st.markdown("---")
-    st.markdown("### 🎬 Blueprint Konten Kamu")
+    st.markdown("<br><hr>", unsafe_allow_html=True)
     
-    # Menampilkan hasil AI dalam struktur yang rapi
-    # Kita bagi dua kolom atau dua baris sesuai permintaanmu
+    # Parsing teks (Sederhana tapi efektif)
+    teks_ai = st.session_state.hasil_ai
+    part_vo = teks_ai.split("[VISUAL]")[0].replace("[VOICE OVER]", "").strip()
+    part_vi = teks_ai.split("[VISUAL]")[-1].strip() if "[VISUAL]" in teks_ai else "Instruksi visual akan muncul otomatis."
+
+    # Tampilan Voice Over
     st.markdown(f"""
     <div class="vo-card">
-        <span class="label-tag" style="color: #3498db;">🎙️ Voice Over / Script (Suara)</span>
-        {st.session_state.hasil_ai.split('VISUAL')[0].replace('VOICE OVER:', '')}
-    </div>
-    
-    <div class="visual-card">
-        <span class="label-tag" style="color: #e74c3c;">📸 Panduan Visual (Gambar/Video)</span>
-        {"VISUAL" + st.session_state.hasil_ai.split('VISUAL')[-1] if 'VISUAL' in st.session_state.hasil_ai else "Instruksi visual menyesuaikan narasi di atas."}
+        <span class="label-tag" style="background-color: #3498db;">🎙️ VOICE OVER</span>
+        <div style="font-size: 1.1em; line-height: 1.8;">{part_vo}</div>
     </div>
     """, unsafe_allow_html=True)
     
+    # Tampilan Visual
+    st.markdown(f"""
+    <div class="visual-card">
+        <span class="label-tag" style="background-color: #e74c3c;">📸 PANDUAN VISUAL</span>
+        <div style="font-size: 1em; line-height: 1.6; color: #555;">{part_vi}</div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("<br>", unsafe_allow_html=True)
     col_re, col_done = st.columns(2)
     with col_re:
         if st.button("🔄 Coba Ide Lain", use_container_width=True):
             generate_content()
             st.rerun()
     with col_done:
-        if st.button("✅ Selesai & Input Baru", use_container_width=True, type="primary", on_click=reset_form):
+        if st.button("✅ Selesai & Reset", use_container_width=True, type="primary", on_click=reset_form):
             st.rerun()
