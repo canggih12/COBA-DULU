@@ -181,10 +181,9 @@ with col_tutor:
         """)
 # Logo Center (Menggunakan baris tunggal agar CSS bekerja maksimal)
 st.markdown(img_to_html("logo.png"), unsafe_allow_html=True)
-st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
 # --- TAMBAHKAN TEKS PERINGATAN DI SINI ---
 st.markdown("""
-    <p style='text-align: center; color: #E67E22; font-weight: bold; font-size: 0.9em; margin-top: -20px; margin-bottom: 20px;'>
+    <p style='text-align: center; color: #E67E22; font-weight: bold; font-size: 0.9em; margin-top: -20px; margin-bottom: 10px;'>
         ⚠️ Jangan Lupa input Api Key Di Menu Pengaturan Panah Pojok Kiri atas
     </p>
 """, unsafe_allow_html=True)
