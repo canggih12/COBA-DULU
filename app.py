@@ -115,7 +115,7 @@ st.markdown(f"""
 
 # --- UI HEADER ---
 # Logo Center (Menggunakan baris tunggal agar CSS bekerja maksimal)
-st.image("logo.png", width=180)
+st.image("logo.png", width=250)
 
 # Tagline Center
 st.markdown("<p class='tagline'>\"Rancang Skrip Video Viral & Auto-Cuan<br>dalam Hitungan Detik\"</p>", unsafe_allow_html=True)
