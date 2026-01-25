@@ -256,7 +256,7 @@ if 'hasil_ai' in st.session_state:
             st.rerun()
     with col_done:
         if st.button("🗑️ Reset", key="btn_reset", use_container_width=True, on_click=reset_form):
-        st.rerun()
+            st.rerun()
             # --- FOOTER (NAMA PEMBUAT) ---
 st.markdown("""
     <div class="footer">
