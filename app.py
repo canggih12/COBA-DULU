@@ -50,9 +50,9 @@ st.markdown(f"""
         display: block; 
         color: #444; 
     }}
-    p {
+    .p {{
     text-align: center;
-    }
+    
     div.stButton > button:first-child {{
         background-color: {gen_bg} !important;
         color: {gen_txt} !important;
