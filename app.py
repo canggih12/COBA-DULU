@@ -70,7 +70,7 @@ st.markdown(f"""
     """, unsafe_allow_html=True)
 
 st.title("Skripi Affiliate")
-st.caption<p.style="text-align: center;">("Rancang Skrip Video Viral & Auto-Cuan dalam Hitungan Detik")</p>
+st.caption("<p style="text-align: center;">Rancang Skrip Video Viral & Auto-Cuan dalam Hitungan Detik</p>")
 
 # --- INPUT AREA ---
 produk = st.text_input("📦 Nama Produk", key="produk")
