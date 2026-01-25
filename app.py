@@ -25,33 +25,29 @@ def reset_form():
     if "hasil_ai" in st.session_state:
         del st.session_state["hasil_ai"]
 
-# --- LOGIKA AUTO-SWITCH 3 API KEY ---
-import random
-
-def initialize_gemini():
-    keys = [
-        st.secrets.get("GEMINI_API_1"),
-        st.secrets.get("GEMINI_API_2"),
-        st.secrets.get("GEMINI_API_3")
-    ]
-    valid_keys = [k for k in keys if k]
+            # --- SIDEBAR: Setting API Key ---
+with st.sidebar:
+    st.title("⚙️ Pengaturan")
+    # Mengambil API Key dari input user
+    api_key_input = st.text_input("Masukkan Gemini API Key:", type="password", help="Dapatkan key di Google AI Studio")
     
-    if not valid_keys:
-        return None
-
-    # ACAK URUTAN: Biar beban terbagi rata di setiap sesi user
-    random.shuffle(valid_keys)
-
-    for key in valid_keys:
+    if api_key_input:
         try:
-            genai.configure(api_key=key)
-            model = genai.GenerativeModel('gemini-1.5-flash') # Gunakan versi 1.5 Flash (lebih stabil)
-            # Test ping
-            model.generate_content("ping", generation_config={"max_output_tokens": 1})
-            return model
-        except Exception:
-            continue
-    return None
+            # Konfigurasi library Gemini dengan key dari user
+            genai.configure(api_key=api_key_input)
+            # Inisialisasi model (gunakan 1.5 Flash agar cepat dan hemat kuota)
+            model = genai.GenerativeModel('gemini-1.5-flash')
+            
+            # Test kecil untuk memastikan key valid
+            # (opsional, tapi bagus untuk validasi instan)
+            st.success("✅ API Key Terhubung!")
+        except Exception as e:
+            st.error(f"❌ Key Tidak Valid: {e}")
+            model = None
+    else:
+        st.warning("⚠️ Masukkan API Key untuk memulai.")
+        model = None
+        
 
 # --- DYNAMIC COLORS ---
 if "sudah_klik" not in st.session_state:
