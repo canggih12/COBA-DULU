@@ -53,6 +53,13 @@ st.markdown(f"""
         justify-content: center;
         margin-bottom: 0px;
     }}
+    /* Garis pembatas tipis dengan jarak yang bisa diatur */
+    .custom-divider {{
+        margin-top: 5px;    /* Atur jarak atas garis */
+        margin-bottom: 20px; /* Atur jarak bawah garis ke input area */
+        border-bottom: 1px solid #eee; /* Warna abu-abu tipis */
+        width: 100%;
+    }}
 
     .tagline {{
         color: #7f8c8d;
@@ -145,7 +152,7 @@ st.markdown(img_to_html("logo.png"), unsafe_allow_html=True)
 
 # Tagline Center
 st.markdown("<p class='tagline'>\"Rancang Skrip Video Viral & Auto-Cuan<br>dalam Hitungan Detik\"</p>", unsafe_allow_html=True)
-st.write("---")
+st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
 # --- INPUT AREA ---
 produk = st.text_input("📦 Nama Produk", key="produk")
 value_produk = st.text_input("💎 Keunggulan / Value Produk", key="value_produk", placeholder="Contoh: Anti air, garansi 1 thn")
