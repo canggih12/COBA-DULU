@@ -52,7 +52,10 @@ st.markdown(f"""
     }}
     .p {{
     text-align: center;
-    
+    }}
+    .text-center {{
+    text-align: center;
+    }}
     div.stButton > button:first-child {{
         background-color: {gen_bg} !important;
         color: {gen_txt} !important;
@@ -70,7 +73,7 @@ st.markdown(f"""
     """, unsafe_allow_html=True)
 
 st.title("Skripi Affiliate")
-st.caption("<p style="text-align: center;">Rancang Skrip Video Viral & Auto-Cuan dalam Hitungan Detik</p>")
+st.caption("<div class="text-center">Rancang Skrip Video Viral & Auto-Cuan dalam Hitungan Detik</div>")
 
 # --- INPUT AREA ---
 produk = st.text_input("📦 Nama Produk", key="produk")
