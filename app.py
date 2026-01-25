@@ -296,11 +296,6 @@ if 'hasil_ai' in st.session_state:
     st.markdown("<span class='label-box'>🎙️ teks voice over (salin disini)</span>", unsafe_allow_html=True)
     st.code(vo_text, language="text")
 
-    # Tombol Navigasi (Warna dan Nama Baru)
-    with col_re:
-        if st.button("🔄 Coba Ide Lain", key="btn_lagi", use_container_width=True):
-            generate_content()
-            st.rerun()
     with col_done:
         if st.button("🗑️ RESET", key="btn_reset", use_container_width=True, on_click=reset_form):
             st.rerun()
