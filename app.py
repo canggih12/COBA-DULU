@@ -17,44 +17,39 @@ try:
     genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
     model = genai.GenerativeModel('gemini-3-flash-preview')
 except:
-    st.error("API Key belum disetting di Secrets!")
+    st.error("API Key belum diset di Secrets!")
 
-# --- CUSTOM CSS UNTUK WARNA TOMBOL ---
+# --- CUSTOM CSS WARNA TOMBOL ---
 if "sudah_klik" not in st.session_state:
     st.session_state["sudah_klik"] = False
 
-# Logika warna tombol Generate (Berubah saat diklik)
 gen_bg = "#E74C3C" if st.session_state["sudah_klik"] else "#3498DB"
 gen_txt = "#000000" if st.session_state["sudah_klik"] else "#FFFFFF"
 
 st.markdown(f"""
     <style>
-    /* 1. Tombol Generate (Biru -> Merah) */
+    /* Tombol Generate (Biru/Merah) */
     div.stButton > button:first-child {{
         background-color: {gen_bg} !important;
         color: {gen_txt} !important;
         border-radius: 10px; font-weight: bold; height: 3.5em; width: 100%; border: none;
     }}
-    
-    /* 2. Tombol Coba Ide Lain (Kuning/Orange) */
+    /* Tombol Coba Lagi (Orange) */
     div.stButton > button[key="btn_lagi"] {{
-        background-color: #F39C12 !important;
-        color: white !important;
+        background-color: #F39C12 !important; color: white !important;
         border-radius: 10px; font-weight: bold; border: none;
     }}
-    
-    /* 3. Tombol Selesai (Hijau) */
+    /* Tombol Selesai (Hijau) */
     div.stButton > button[key="btn_selesai"] {{
-        background-color: #27AE60 !important;
-        color: white !important;
+        background-color: #27AE60 !important; color: white !important;
         border-radius: 10px; font-weight: bold; border: none;
     }}
-
     .box-container {{
-        background-color: white; padding: 15px; border-radius: 10px;
-        border: 2px solid #333; margin-bottom: 20px;
+        background-color: white; padding: 20px; border-radius: 12px;
+        border: 2px solid #333; margin-bottom: 20px; color: #333;
+        line-height: 1.6; font-family: sans-serif;
     }}
-    .label-box {{ font-weight: bold; margin-bottom: 5px; display: block; }}
+    .label-box {{ font-weight: bold; text-transform: uppercase; font-size: 0.8em; margin-bottom: 5px; display: block; color: #555; }}
     </style>
     """, unsafe_allow_html=True)
 
@@ -79,7 +74,14 @@ def generate_content():
         return
     st.session_state["sudah_klik"] = True
     try:
-        prompt = f"Buat skrip affiliate {durasi} untuk {produk}. Konteks: {konteks}. Angle: {angle}. Pisahkan Visual dan Voice Over."
+        # Prompt diperketat agar tidak pakai tabel
+        prompt = f"""Buat skrip affiliate {durasi} untuk {produk}. Konteks: {konteks}. Angle: {angle}.
+        DILARANG PAKAI TABEL. Berikan jawaban dengan format:
+        BAGIAN VISUAL: (isi panduan gambar disini)
+        ---
+        BAGIAN VOICE OVER: (isi teks narasi disini)
+        Pastikan CTA keranjang pojok kiri bawah ada di akhir."""
+        
         response = model.generate_content(prompt)
         st.session_state.hasil_ai = response.text
     except:
@@ -87,19 +89,29 @@ def generate_content():
 
 st.button("Generate Skrip Viral ✨", on_click=generate_content)
 
-# --- TAMPILAN HASIL ---
+# --- TAMPILAN HASIL (FULL CARD, NO TABLE) ---
 if 'hasil_ai' in st.session_state:
     st.markdown("---")
     
-    # Visual Box
-    st.markdown("<span class='label-box'>visual konten</span>", unsafe_allow_html=True)
-    st.markdown(f"<div class='box-container'>{st.session_state.hasil_ai}</div>", unsafe_allow_html=True)
+    res = st.session_state.hasil_ai
+    # Memisahkan teks secara manual berdasarkan kata kunci agar tidak tercampur
+    if "---" in res:
+        parts = res.split("---")
+        visual_text = parts[0].replace("BAGIAN VISUAL:", "").strip()
+        vo_text = parts[1].replace("BAGIAN VOICE OVER:", "").strip()
+    else:
+        visual_text = res
+        vo_text = "Teks voice over gagal dipisahkan secara otomatis. Silakan salin dari kotak di atas."
 
-    # Voice Over Box (Copyable)
-    st.markdown("<span class='label-box'>teks voice over</span>", unsafe_allow_html=True)
-    st.code(st.session_state.hasil_ai, language="text")
+    # Kolom Visual
+    st.markdown("<span class='label-box'>📸 visual konten</span>", unsafe_allow_html=True)
+    st.markdown(f"<div class='box-container'>{visual_text}</div>", unsafe_allow_html=True)
 
-    # Tombol Navigasi dengan Warna Berbeda
+    # Kolom Voice Over (Copyable)
+    st.markdown("<span class='label-box'>🎙️ teks voice over (salin disini)</span>", unsafe_allow_html=True)
+    st.code(vo_text, language="text")
+
+    # Tombol Navigasi
     col_re, col_done = st.columns(2)
     with col_re:
         if st.button("🔄 Coba Ide Lain", key="btn_lagi", use_container_width=True):
