@@ -41,7 +41,18 @@ st.markdown(f"""
         white-space: pre-wrap; 
         word-wrap: break-word;
     }}
-    
+    .footer {{
+        position: relative;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        color: #95a5a6;
+        font-size: 0.8em;
+        padding: 20px 0px;
+        border-top: 1px solid #eee;
+        margin-top: 50px;
+    }}
     .label-box {{ 
         font-weight: bold; 
         text-transform: uppercase; 
@@ -174,3 +185,9 @@ if 'hasil_ai' in st.session_state:
         # Nama diganti jadi Reset, fungsi reset_form tetap dipertahankan
         if st.button("🗑️ Reset", key="btn_reset", use_container_width=True, on_click=reset_form):
             st.rerun()
+            # --- FOOTER (NAMA PEMBUAT) ---
+st.markdown("""
+    <div class="footer">
+        <p>Built with ❤️ by <b>[Cerita Ozi]</b> | © 2026 Skripi Konten Team</p>
+    </div>
+    """, unsafe_allow_html=True)
