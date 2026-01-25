@@ -157,7 +157,7 @@ with col_tutor:
         1. **📦 Nama Produk**: Isi nama barang yang ingin dijual.
         2. **💎 Value**: Sebutkan kelebihan produk (misal: awet, murah).
         3. **🎯 Konteks**: Ceritakan suasana video (misal: lagi di kantor).
-        4. **👥 Target Usia**: AI akan menyesuaikan gaya bahasa (Gaul vs Formal).
+        4. **👥 Target Usia**: Tentukan target usia agar bahasa yang digunakan sesuai.
         5. **🎬 Angle**: Pilih cara penyampaian konten yang kamu mau.
         
         *Klik **Generate** dan skrip siap digunakan!*
