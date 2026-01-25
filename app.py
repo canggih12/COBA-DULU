@@ -30,7 +30,7 @@ st.title("🪄 Affiliate Genie Pro")
 # --- AREA INPUT ---
 with st.sidebar:
     st.header("Konfigurasi API")
-    api_key = st.text_input("Gemini API Key", type="password")
+    api_key = st.secrets["GEMINI_API_KEY"]
     st.divider()
     st.info("Tips: Masukkan konteks spesifik agar AI tidak melantur.")
 
