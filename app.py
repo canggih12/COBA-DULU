@@ -25,12 +25,48 @@ def reset_form():
     if "hasil_ai" in st.session_state:
         del st.session_state["hasil_ai"]
 
-# --- SETUP API KEY ---
-try:
-    genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-    model = genai.GenerativeModel('gemini-3-flash-preview')
-except:
-    st.error("API Key belum diset di Secrets!")
+# --- LOGIKA AUTO-SWITCH 3 API KEY ---
+def initialize_gemini():
+    # Kumpulkan semua kunci yang tersedia
+    keys = [
+        st.secrets.get("GEMINI_API_1"),
+        st.secrets.get("GEMINI_API_2"),
+        st.secrets.get("GEMINI_API_3")
+    ]
+    
+    # Bersihkan dari nilai None atau kosong
+    valid_keys = [k for k in keys if k]
+    
+    if not valid_keys:
+        st.error("🚨 Tidak ada API Key yang ditemukan di Secrets!")
+        return None
+
+    for i, key in enumerate(valid_keys):
+        try:
+            genai.configure(api_key=key)
+            model = genai.GenerativeModel('gemini-3-flash-preview')
+            
+            # Test ping kecil untuk memastikan key tidak limit/error
+            # Jika baris ini gagal, ia akan langsung lompat ke 'except'
+            model.generate_content("ping", generation_config={"max_output_tokens": 1})
+            
+            # Jika berhasil, simpan info jalur mana yang dipakai (opsional)
+            st.session_state['active_api_index'] = i + 1
+            return model
+            
+        except Exception as e:
+            # Jika ini kunci terakhir dan masih gagal
+            if i == len(valid_keys) - 1:
+                st.error(f"🚨 Semua API Key (1-3) sudah limit atau error.")
+                return None
+            continue # Coba kunci berikutnya
+
+# Panggil fungsi untuk mendapatkan model yang aktif
+model = initialize_gemini()
+
+# Tampilkan status jalur API di Sidebar (agar user tahu)
+if model and 'active_api_index' in st.session_state:
+    st.sidebar.success(f"🟢 Jalur API {st.session_state['active_api_index']} Aktif")
 
 # --- DYNAMIC COLORS ---
 if "sudah_klik" not in st.session_state:
