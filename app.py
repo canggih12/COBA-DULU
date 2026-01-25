@@ -19,7 +19,7 @@ try:
 except:
     st.error("API Key belum diset di Secrets!")
 
-# --- CUSTOM CSS WARNA TOMBOL ---
+# --- CUSTOM CSS ---
 if "sudah_klik" not in st.session_state:
     st.session_state["sudah_klik"] = False
 
@@ -28,28 +28,41 @@ gen_txt = "#000000" if st.session_state["sudah_klik"] else "#FFFFFF"
 
 st.markdown(f"""
     <style>
-    /* Tombol Generate (Biru/Merah) */
+    .box-container {{
+        background-color: white; 
+        padding: 20px; 
+        border-radius: 12px;
+        border: 2px solid #333; 
+        margin-bottom: 20px; 
+        color: #333;
+        line-height: 1.8; 
+        font-family: sans-serif;
+        white-space: pre-wrap; /* Menjaga Enter dari AI tetap muncul */
+        word-wrap: break-word;
+    }}
+    
+    .label-box {{ 
+        font-weight: bold; 
+        text-transform: uppercase; 
+        font-size: 0.85em; 
+        margin-bottom: 8px; 
+        display: block; 
+        color: #444; 
+    }}
+
     div.stButton > button:first-child {{
         background-color: {gen_bg} !important;
         color: {gen_txt} !important;
         border-radius: 10px; font-weight: bold; height: 3.5em; width: 100%; border: none;
     }}
-    /* Tombol Coba Lagi (Orange) */
     div.stButton > button[key="btn_lagi"] {{
         background-color: #F39C12 !important; color: white !important;
         border-radius: 10px; font-weight: bold; border: none;
     }}
-    /* Tombol Selesai (Hijau) */
     div.stButton > button[key="btn_selesai"] {{
         background-color: #27AE60 !important; color: white !important;
         border-radius: 10px; font-weight: bold; border: none;
     }}
-    .box-container {{
-        background-color: white; padding: 20px; border-radius: 12px;
-        border: 2px solid #333; margin-bottom: 20px; color: #333;
-        line-height: 1.6; font-family: sans-serif;
-    }}
-    .label-box {{ font-weight: bold; text-transform: uppercase; font-size: 0.8em; margin-bottom: 5px; display: block; color: #555; }}
     </style>
     """, unsafe_allow_html=True)
 
@@ -74,13 +87,23 @@ def generate_content():
         return
     st.session_state["sudah_klik"] = True
     try:
-        # Prompt diperketat agar tidak pakai tabel
+        # Prompt dipertegas untuk pemisahan baris per durasi
         prompt = f"""Buat skrip affiliate {durasi} untuk {produk}. Konteks: {konteks}. Angle: {angle}.
-        DILARANG PAKAI TABEL. Berikan jawaban dengan format:
-        BAGIAN VISUAL: (isi panduan gambar disini)
+        Wajib gunakan format list vertikal ke bawah seperti ini:
+
+        BAGIAN VISUAL:
+        0-5 detik: (instruksi)
+        5-10 detik: (instruksi)
+        dst...
+
         ---
-        BAGIAN VOICE OVER: (isi teks narasi disini)
-        Pastikan CTA keranjang pojok kiri bawah ada di akhir."""
+
+        BAGIAN VOICE OVER:
+        0-5 detik (Hook): (teks narasi)
+        5-10 detik: (teks narasi)
+        dst...
+
+        Jangan gunakan tabel. Berikan enter (jarak baris) yang jelas antar durasi."""
         
         response = model.generate_content(prompt)
         st.session_state.hasil_ai = response.text
@@ -89,25 +112,24 @@ def generate_content():
 
 st.button("Generate Skrip Viral ✨", on_click=generate_content)
 
-# --- TAMPILAN HASIL (FULL CARD, NO TABLE) ---
+# --- TAMPILAN HASIL ---
 if 'hasil_ai' in st.session_state:
     st.markdown("---")
     
     res = st.session_state.hasil_ai
-    # Memisahkan teks secara manual berdasarkan kata kunci agar tidak tercampur
     if "---" in res:
         parts = res.split("---")
         visual_text = parts[0].replace("BAGIAN VISUAL:", "").strip()
         vo_text = parts[1].replace("BAGIAN VOICE OVER:", "").strip()
     else:
         visual_text = res
-        vo_text = "Teks voice over gagal dipisahkan secara otomatis. Silakan salin dari kotak di atas."
+        vo_text = res
 
-    # Kolom Visual
+    # Kotak Visual
     st.markdown("<span class='label-box'>📸 visual konten</span>", unsafe_allow_html=True)
     st.markdown(f"<div class='box-container'>{visual_text}</div>", unsafe_allow_html=True)
 
-    # Kolom Voice Over (Copyable)
+    # Kotak Voice Over
     st.markdown("<span class='label-box'>🎙️ teks voice over (salin disini)</span>", unsafe_allow_html=True)
     st.code(vo_text, language="text")
 
