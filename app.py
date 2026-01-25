@@ -21,6 +21,8 @@ st.markdown("""
     .stButton>button {
         border-radius: 10px;
         font-weight: bold;
+        color: red;
+        text-color: Black;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -40,7 +42,7 @@ with st.container():
     
     col1, col2, col3 = st.columns(3)
     with col1:
-        target_usia = st.selectbox("Target Usia", ["Gen Z", "Dewasa", "Orang Tua", "Umum"])
+        target_usia = st.selectbox("Target Usia", ["18-24 tahun", "24-35 Tahun", "35-50 Tahun", "18-45 Tahun"])
     with col2:
         durasi = st.selectbox("Durasi", ["20 detik", "30 detik", "45 detik", "60 detik"])
     with col3:
@@ -64,8 +66,9 @@ def generate_content():
         WAJIB:
         1. Hook yang kuat di awal.
         2. Masalah & Solusi sesuai konteks.
-        3. CTA: "Klik keranjang di pojok kiri bawah sekarang juga!"
-        4. Berikan variasi kata-kata yang berbeda dari sebelumnya.
+        3. Gaya Bahasa Sesuai Dengan Target Usia
+        4. CTA: "Klik keranjang di pojok kiri bawah sekarang juga!"
+        5. Berikan variasi kata-kata yang berbeda dari sebelumnya.
         """
         
         with st.spinner('Meracik ide baru...'):
@@ -75,7 +78,7 @@ def generate_content():
         st.error(f"Error: {e}")
 
 # --- TOMBOL UTAMA ---
-if st.button("Generate Skrip Viral ✨", use_container_width=True):
+if st.button("Generate", use_container_width=True):
     generate_content()
 
 # --- TAMPILAN HASIL ---
