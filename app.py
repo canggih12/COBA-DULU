@@ -221,14 +221,14 @@ def generate_content():
         Target Usia: {target_usia}. 
         Angle: {angle}.
         
-        PENTING: Gunakan gaya bahasa dan kosa kata yang sangat sesuai untuk {target_usia} DENGAN KETERANGAN USIA: GEN Z= 18-24tahun, DEWASA= 24-35tahun & UMUM= 18-50tahun.
+        PENTING: Gunakan gaya bahasa dan kosa kata yang sangat sesuai untuk {target_usia}.
         Format harus terdiri dari:
             1. **HOOK**: Kalimat pembuka yang bikin orang berhenti scrolling.
             2. **MASALAH**: Singgung keresahan yang dialami calon pembeli sesuai {konteks} & {target_usia}.
             3. **SOLUSI/VALUE**: Kenapa produk {produk} ini wajib dibeli.
             4. **CTA**: Ajakan beli di keranjang pojok kiri bawah
         Wajib gunakan format vertikal ke bawah dengan jeda antar baris yang jelas. 
-        GUNAKAN GARIS PEMBATAS ANTARA BAGIAN VISUAL DAN BAGIAN VOICE OVER.
+        DILARANG GUNAKAN TABEL.
 
         Susun seperti ini:
 
