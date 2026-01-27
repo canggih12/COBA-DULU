@@ -203,7 +203,7 @@ div[data-testid="stVerticalBlock"] > div:has(div.stPopover) {{
 
 # --- UI HEADER ---
 # Tutorial di Kiri (Button Kecil)
-col_api, col_tutor, col_empty = st.columns([1, 1, 1]) # Kolom kecil di kiri, sisanya kosong
+col_api, col_tutor = st.columns(2)
 with col_api:
     # Popover Input API Key
     with st.popover("🔑 API Key", use_container_width=True):
