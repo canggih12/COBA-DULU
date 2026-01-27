@@ -84,23 +84,17 @@ gen_txt = "#FFFFFF"
 # --- CUSTOM CSS (OPTIMIZED) ---
 st.markdown(f"""
     <style>
-    /* Menghilangkan margin berlebih di atas */
-    .block-container {{
-        padding-top: 2rem !important;
-        padding-bottom: 2rem !important;
+        /* Paksa kolom tetap sejajar ke samping di layar HP */
+    [data-testid="column"] {{
+        width: calc(50% - 1rem) !important;
+        flex: 1 1 calc(50% - 1rem) !important;
+        min-width: unset !important;
     }}
-
-    /* Memaksa kolom tetap sejajar di layar kecil/HP */
-[data-testid="column"] {{
-    width: calc(33% - 1rem) !important;
-    flex: 1 1 calc(33% - 1rem) !important;
-    min-width: unset !important;
-}}
-
-/* Menghilangkan margin bawah default agar sejajar sempurna */
-div[data-testid="stVerticalBlock"] > div:has(div.stPopover) {{
-    margin-bottom: 0px;
-}}
+    
+    /* Menghapus padding berlebih pada container kolom */
+    [data-testid="stHorizontalBlock"] {{
+        gap: 0.5rem !important;
+    }}
 
     .logo-container {{
         display: flex;
@@ -131,18 +125,16 @@ div[data-testid="stVerticalBlock"] > div:has(div.stPopover) {{
         width: 100%;
     }}
 
-    /* Kecilkan Tombol Tutorial & Geser Kiri */
+
+    /* Pastikan popover mengambil lebar penuh kolom */
     .stPopover {{
-        text-align: left !important;
-        display: inline-block !important;
+        width: 100% !important;
     }}
     
     .stPopover button {{
-        width: auto !important;
-        padding: 0px 15px !important;
-        height: 2.5em !important;
-        font-size: 0.8em !important;
-    }}
+        width: 100% !important;
+        height: 3em !important;
+        
 
     .box-container {{
         background-color: white; 
