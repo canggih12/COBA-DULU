@@ -191,7 +191,23 @@ st.markdown(f"""
 
 # --- UI HEADER ---
 # Tutorial di Kiri (Button Kecil)
-col_tutor, col_empty = st.columns([1, 3]) # Kolom kecil di kiri, sisanya kosong
+col_api, col_tutor, col_empty = st.columns([2, 1, 2]) # Kolom kecil di kiri, sisanya kosong
+with col_api:
+    # Input API Key di paling kiri
+    api_key_input = st.text_input(
+        "API Key", 
+        value=st.session_state.get('api_key', ""),
+        type="password", 
+        placeholder="Input Gemini API Key...",
+        key="api_key_main"
+    )
+    # Konfigurasi langsung jika diisi
+    if api_key_input:
+        try:
+            genai.configure(api_key=api_key_input)
+            model = genai.GenerativeModel('gemini-1.5-flash') # Sesuaikan tipe model
+        except:
+            pass
 with col_tutor:
     with st.popover("📖 Tutorial"):
         st.markdown("### 💡 Panduan Penggunaan")
