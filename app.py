@@ -188,7 +188,7 @@ if api_key_input:
             except Exception as e:
                 st.error(f"❌ Error: {e}")
                 model = None
-        else:
+else:
             model = None                
 # --- INPUT AREA ---
 produk = st.text_input("📦 Nama Produk", key="produk")
