@@ -89,7 +89,19 @@ st.markdown(f"""
         padding-top: 2rem !important;
         padding-bottom: 2rem !important;
     }}
-    
+
+    /* Memaksa kolom tetap sejajar di layar kecil/HP */
+[data-testid="column"] {{
+    width: calc(33% - 1rem) !important;
+    flex: 1 1 calc(33% - 1rem) !important;
+    min-width: unset !important;
+}}
+
+/* Menghilangkan margin bawah default agar sejajar sempurna */
+div[data-testid="stVerticalBlock"] > div:has(div.stPopover) {{
+    margin-bottom: 0px;
+}}
+
     .logo-container {{
         display: flex;
         justify-content: center;
