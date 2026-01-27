@@ -86,14 +86,15 @@ st.markdown(f"""
     <style>
         /* Paksa kolom tetap sejajar ke samping di layar HP */
     [data-testid="column"] {{
-        width: calc(50% - 1rem) !important;
-        flex: 1 1 calc(50% - 1rem) !important;
+        width: fit-conten !important;
+        flex: unset !important;
         min-width: unset !important;
     }}
     
     /* Menghapus padding berlebih pada container kolom */
     [data-testid="stHorizontalBlock"] {{
-        gap: 0.5rem !important;
+        gap: 10px !important;
+        justify-content: flex-start !important;
     }}
 
     .logo-container {{
@@ -134,7 +135,7 @@ st.markdown(f"""
     .stPopover button {{
         width: 100% !important;
         height: 3em !important;
-        
+        }}
 
     .box-container {{
         background-color: white; 
