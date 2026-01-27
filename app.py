@@ -180,7 +180,16 @@ st.markdown("""
 st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
 # --- INPUT API KEY ---
 api_key_input = st.text_input("Masukkan Gemini API Key:", type="password", help="Dapatkan key di Google AI Studio")
-                
+        if api_key_input:
+            try:
+                genai.configure(api_key=api_key_input)
+                model = genai.GenerativeModel('gemini-1.5-flash') # Rekomendasi pakai flash terbaru
+                st.success("✅ Terhubung!")
+            except Exception as e:
+                st.error(f"❌ Error: {e}")
+                model = None
+        else:
+            model = None                
 # --- INPUT AREA ---
 produk = st.text_input("📦 Nama Produk", key="produk")
 value_produk = st.text_input("💎 Keunggulan / Value Produk", key="value_produk", placeholder="Contoh: Anti air, garansi 1 thn")
