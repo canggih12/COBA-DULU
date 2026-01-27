@@ -195,7 +195,7 @@ col_api, col_tutor, col_empty = st.columns([2, 1, 2]) # Kolom kecil di kiri, sis
 with col_api:
     # Mengambil API Key dari input user
     with st.popover("Input Api Key"):
-            st.markdown("### input Api Key Di Bawah")
+            st.title("### input Api Key Di Bawah")
         api_key_input = st.text_input("Masukkan Gemini API Key:", type="password", help="Dapatkan key di Google AI Studio")
     
     if api_key_input:
