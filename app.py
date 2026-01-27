@@ -196,9 +196,8 @@ with col_api:
     # Mengambil API Key dari input user
         with st.popover("Input Api Key"):
                 api_key_input = st.text_input("Masukkan Gemini API Key:", type="password", help="Dapatkan key di Google AI Studio")
-    
-    if api_key_input:
-        try:
+                if api_key_input:
+                        try:
             # Konfigurasi library Gemini dengan key dari user
             genai.configure(api_key=api_key_input)
             # Inisialisasi model (gunakan gemini-3)
@@ -207,10 +206,10 @@ with col_api:
             # Test kecil untuk memastikan key valid
             # (opsional, tapi bagus untuk validasi instan)
             st.success("✅ API Key Terhubung!")
-        except Exception as e:
+except Exception as e:
             st.error(f"❌ Key Tidak Valid: {e}")
             model = None
-    else:
+else:
         st.warning("⚠️ Masukkan API Key untuk memulai.")
         model = None
 with col_tutor:
