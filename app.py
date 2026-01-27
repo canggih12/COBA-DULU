@@ -195,7 +195,7 @@ st.markdown(f"""
 
 # --- UI HEADER ---
 # Tutorial di Kiri (Button Kecil)
-col_api, col_tutor = st.columns(2)
+col_api, col_tutor, col_empety = st.columns([1, 1, 1)
 with col_api:
     # Popover Input API Key
     with st.popover("🔑 API Key", use_container_width=True):
