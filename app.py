@@ -170,11 +170,6 @@ with col_tutor:
 # Logo Center (Menggunakan baris tunggal agar CSS bekerja maksimal)
 st.markdown(img_to_html("logo.png"), unsafe_allow_html=True)
 # --- TAMBAHKAN TEKS PERINGATAN DI SINI ---
-
-st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
-# --- INPUT API KEY ---
-api_key_input = st.text_input("Masukkan Gemini API Key:", type="password", help="Dapatkan key di Google AI Studio")
-    
 if api_key_input:
         try:
             # Konfigurasi library Gemini dengan key dari user
@@ -188,7 +183,11 @@ if api_key_input:
         except Exception as e:
             st.error(f"❌ Key Tidak Valid: {e}")
             model = None
-            
+
+st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
+# --- INPUT API KEY ---
+api_key_input = st.text_input("Masukkan Gemini API Key:", type="password", help="Dapatkan key di Google AI Studio")
+                
 # --- INPUT AREA ---
 produk = st.text_input("📦 Nama Produk", key="produk")
 value_produk = st.text_input("💎 Keunggulan / Value Produk", key="value_produk", placeholder="Contoh: Anti air, garansi 1 thn")
