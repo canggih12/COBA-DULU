@@ -176,7 +176,7 @@ st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
 api_key_input = st.text_input(
             "Masukkan Gemini API Key:", 
             type="password", 
-            placeholder="masukan disini",
+            placeholder="masukan disini",)
 if api_key_input:
      try:
                 genai.configure(api_key=api_key_input)
@@ -187,7 +187,7 @@ if api_key_input:
                 model = None
       else:
             model = None
-            )
+            
 # --- INPUT AREA ---
 produk = st.text_input("📦 Nama Produk", key="produk")
 value_produk = st.text_input("💎 Keunggulan / Value Produk", key="value_produk", placeholder="Contoh: Anti air, garansi 1 thn")
