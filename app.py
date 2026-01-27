@@ -1,29 +1,4 @@
 import streamlit as st
-
-# 1. Setting Halaman (Harus diletakkan paling atas)
-st.set_page_config(page_title="SkripiKonten", page_icon="📝")
-
-# 2. CSS untuk menyembunyikan Menu, Footer, dan Header
-hide_menu_style = """
-        <style>
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-          .stAppDeployButton {display: none;}
-        /* Opsional: Menghilangkan padding atas agar lebih mepet ke atas */
-        .block-container {
-            padding-top: 1rem;
-            padding-bottom: 0rem;
-        }
-        </style>
-        """
-st.markdown(hide_menu_style, unsafe_allow_html=True)
-
-# --- LANJUTKAN KODE ASLI KAMU DI BAWAH INI ---
-# st.title("SkripiKonten")
-# ... dst
-
-
-import streamlit as st
 import google.generativeai as genai
 import base64
 
@@ -84,6 +59,14 @@ gen_txt = "#FFFFFF"
 # --- CUSTOM CSS (OPTIMIZED) ---
 st.markdown(f"""
     <style>
+    #MainMenu {{visibility: hidden;}}
+        footer {{visibility: hidden;}}
+          .stAppDeployButton {{display: none;}}
+        /* Opsional: Menghilangkan padding atas agar lebih mepet ke atas */
+        .block-container {{
+            padding-top: 1rem;
+            padding-bottom: 0rem;
+        }}
         /* Paksa kolom tetap sejajar ke samping di layar HP */
      [data-testid="stHorizontalBlock"] {{
         display: flex;
