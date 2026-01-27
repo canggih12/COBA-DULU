@@ -127,15 +127,17 @@ st.markdown(f"""
     }}
 
 
-    /* Pastikan popover mengambil lebar penuh kolom */
+    /* Membuat tombol popover ukurannya pas dengan teks di dalamnya */
     .stPopover {{
-        width: 100% !important;
+        width: fit-content !important;
     }}
     
     .stPopover button {{
-        width: 100% !important;
-        height: 3em !important;
-        }}
+        width: fit-content !important; /* Tombol tidak lagi memaksa lebar penuh */
+        padding: 0px 15px !important; /* Memberi ruang di dalam tombol agar elegan */
+        height: 2.5em !important;     /* Ukuran tinggi yang lebih ringkas */
+        font-size: 0.85em !important;
+    }}
 
     .box-container {{
         background-color: white; 
