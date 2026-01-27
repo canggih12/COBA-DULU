@@ -175,7 +175,7 @@ st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
 # --- INPUT API KEY ---
 api_key_input = st.text_input("Masukkan Gemini API Key:", type="password", help="Dapatkan key di Google AI Studio")
     
-    if api_key_input:
+if api_key_input:
         try:
             # Konfigurasi library Gemini dengan key dari user
             genai.configure(api_key=api_key_input)
