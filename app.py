@@ -170,19 +170,12 @@ with col_tutor:
 # Logo Center (Menggunakan baris tunggal agar CSS bekerja maksimal)
 st.markdown(img_to_html("logo.png"), unsafe_allow_html=True)
 # --- TAMBAHKAN TEKS PERINGATAN DI SINI ---
-if api_key_input:
-        try:
-            # Konfigurasi library Gemini dengan key dari user
-            genai.configure(api_key=api_key_input)
-            # Inisialisasi model (gunakan gemini-3)
-            model = genai.GenerativeModel('gemini-3-flash-preview')
-            
-            # Test kecil untuk memastikan key valid
-            # (opsional, tapi bagus untuk validasi instan)
-            st.success("✅ API Key Terhubung!")
-        except Exception as e:
-            st.error(f"❌ Key Tidak Valid: {e}")
-            model = None
+st.markdown("""
+    <p style='text-align: center; background-color: #F0F8FF; color: #FF0000; font-weight: bold; font-size: 0.9em; margin-top: -20px; margin-bottom: 10px;'>
+        ⚠️ Jangan Lupa input Api Key agar aplikasi berjalan
+    </p>
+""", unsafe_allow_html=True)
+
 
 st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
 # --- INPUT API KEY ---
