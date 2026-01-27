@@ -177,15 +177,15 @@ api_key_input = st.text_input(
             "Masukkan Gemini API Key:", 
             type="password", 
             placeholder="masukan disini",)
-if api_key_input:
-     try:
+        if api_key_input:
+            try:
                 genai.configure(api_key=api_key_input)
                 model = genai.GenerativeModel('gemini-1.5-flash') # Rekomendasi pakai flash terbaru
                 st.success("✅ Terhubung!")
             except Exception as e:
                 st.error(f"❌ Error: {e}")
                 model = None
-      else:
+        else:
             model = None
             
 # --- INPUT AREA ---
