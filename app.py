@@ -197,7 +197,8 @@ with col_api:
         with st.popover("Input Api Key"):
                 api_key_input = st.text_input("Masukkan Gemini API Key:", type="password", help="Dapatkan key di Google AI Studio")
                 if api_key_input:
-                        try:
+                      
+try:
             # Konfigurasi library Gemini dengan key dari user
             genai.configure(api_key=api_key_input)
             # Inisialisasi model (gunakan gemini-3)
