@@ -159,11 +159,11 @@ with col_tutor:
         2. **💎 Value**: Sebutkan kelebihan produk (misal: awet, murah).
         3. **🎯 Konteks**: Ceritakan suasana video (misal: lagi di kantor).
         4. **👥 Target Usia**: Tentukan target usia agar bahasa yang digunakan sesuai.
-        5. **🎬 Angle**: Pilih cara penyampaian konten yang kamu mau.
-        st.markdown("### 🤔 Kenapa Harus Input Gemini Api Key ?")
-        - Agar Pembuatan Skrip Berjalan Lancar Tanpa Limit
-        + Jika Kamu Belum Tau Cara membuat Api Key klik https://aistudio.google.com/api-keys
-        + Setelah Mendapatkan Api Key Langsung Masukkan Di Pengaturan 
+        ---
+        ### 🔑 Kenapa Perlu API Key?
+        1. **🚀 Tanpa Limit**: Agar pembuatan skrip berjalan lancar tanpa batasan kuota harian.
+        2. **🛠️ Cara Buat**: Jika belum punya, klik [Google AI Studio](https://aistudio.google.com/app/apikey).
+        3. **📥 Aktivasi**: Setelah dapat, langsung masukkan kodenya di kolom konfigurasi.
         
         *Klik **Generate** dan skrip siap digunakan!*
         """)
