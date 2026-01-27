@@ -8,7 +8,7 @@ hide_menu_style = """
         <style>
         #MainMenu {visibility: hidden;}
         footer {visibility: hidden;}
-        header {visibility: hidden;}
+          .stAppDeployButton {display: none;}
         /* Opsional: Menghilangkan padding atas agar lebih mepet ke atas */
         .block-container {
             padding-top: 1rem;
