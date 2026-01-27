@@ -25,30 +25,6 @@ def reset_form():
     if "hasil_ai" in st.session_state:
         del st.session_state["hasil_ai"]
 
-            # --- SIDEBAR: Setting API Key ---
-with st.sidebar:
-    st.title("⚙️ Pengaturan")
-    # Mengambil API Key dari input user
-    api_key_input = st.text_input("Masukkan Gemini API Key:", type="password", help="Dapatkan key di Google AI Studio")
-    
-    if api_key_input:
-        try:
-            # Konfigurasi library Gemini dengan key dari user
-            genai.configure(api_key=api_key_input)
-            # Inisialisasi model (gunakan gemini-3)
-            model = genai.GenerativeModel('gemini-3-flash-preview')
-            
-            # Test kecil untuk memastikan key valid
-            # (opsional, tapi bagus untuk validasi instan)
-            st.success("✅ API Key Terhubung!")
-        except Exception as e:
-            st.error(f"❌ Key Tidak Valid: {e}")
-            model = None
-    else:
-        st.warning("⚠️ Masukkan API Key untuk memulai.")
-        model = None
-        
-
 # --- DYNAMIC COLORS ---
 if "sudah_klik" not in st.session_state:
     st.session_state["sudah_klik"] = False
@@ -61,26 +37,13 @@ st.markdown(f"""
     <style>
     #MainMenu {{visibility: hidden;}}
         footer {{visibility: hidden;}}
+        header {{visibility: hidden;}}
           .stAppDeployButton {{display: none;}}
         /* Opsional: Menghilangkan padding atas agar lebih mepet ke atas */
         .block-container {{
             padding-top: 1rem;
             padding-bottom: 0rem;
         }}
-        /* Paksa kolom tetap sejajar ke samping di layar HP */
-     [data-testid="stHorizontalBlock"] {{
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        gap: 10px; /* Jarak antar tombol */
-    }}
-    
-        /* Memaksa kolom untuk tidak melebar otomatis */
-    [data-testid="column"] {{
-        width: fit-content !important;
-        flex: unset !important;
-        min-width: unset !important;
-    }}
 
     .logo-container {{
         display: flex;
@@ -187,29 +150,7 @@ st.markdown(f"""
 
 # --- UI HEADER ---
 # Tutorial di Kiri (Button Kecil)
-col_api, col_tutor, col_3 = st.columns([1, 1, 4])
-with col_api:
-    # Popover Input API Key
-    with st.popover("🔑 API Key", use_container_width=True):
-        st.markdown("### ⚙️ Pengaturan API")
-        api_key_input = st.text_input(
-            "Masukkan Gemini API Key:", 
-            type="password", 
-            placeholder="AIzaSy...",
-            help="Dapatkan key di Google AI Studio"
-        )
-        
-        if api_key_input:
-            try:
-                genai.configure(api_key=api_key_input)
-                model = genai.GenerativeModel('gemini-1.5-flash') # Rekomendasi pakai flash terbaru
-                st.success("✅ Terhubung!")
-            except Exception as e:
-                st.error(f"❌ Error: {e}")
-                model = None
-        else:
-            model = None
-        
+col_tutor, col_3 = st.columns([1, 4])
 with col_tutor:
     with st.popover("📖 Tutorial"):
         st.markdown("### 💡 Panduan Penggunaan")
@@ -229,13 +170,25 @@ with col_tutor:
 # Logo Center (Menggunakan baris tunggal agar CSS bekerja maksimal)
 st.markdown(img_to_html("logo.png"), unsafe_allow_html=True)
 # --- TAMBAHKAN TEKS PERINGATAN DI SINI ---
-st.markdown("""
-    <p style='text-align: center; background-color: #F0F8FF; color: #FF0000; font-weight: bold; font-size: 0.9em; margin-top: -20px; margin-bottom: 10px;'>
-        ⚠️ Jangan Lupa input Api Key Di Menu Pengaturan Panah Pojok Kiri atas
-    </p>
-""", unsafe_allow_html=True)
+        if api_key_input:
+            try:
+                genai.configure(api_key=api_key_input)
+                model = genai.GenerativeModel('gemini-1.5-flash') # Rekomendasi pakai flash terbaru
+                st.success("✅ Terhubung!")
+            except Exception as e:
+                st.error(f"❌ Error: {e}")
+                model = None
+        else:
+            model = None
+        
 
 st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
+# --- INPUT API KEY ---
+api_key_input = st.text_input(
+            "Masukkan Gemini API Key:", 
+            type="password", 
+            placeholder="masukan disini",
+            )
 # --- INPUT AREA ---
 produk = st.text_input("📦 Nama Produk", key="produk")
 value_produk = st.text_input("💎 Keunggulan / Value Produk", key="value_produk", placeholder="Contoh: Anti air, garansi 1 thn")
@@ -253,15 +206,22 @@ with col3:
 def generate_content():
     st.session_state["sudah_klik"] = True
     try:
-        prompt = f"""Buat skrip affiliate {durasi} untuk {produk}. 
+        prompt = f"""Kamu adalah ahli copywriting affiliate TikTok dan Instagram. 
+        Buat skrip affiliate {durasi} 
+        untuk {produk}. 
         Keunggulan Produk: {value_produk}.
         Konteks: {konteks}. 
         Target Usia: {target_usia}. 
         Angle: {angle}.
         
-        PENTING: Gunakan gaya bahasa dan kosa kata yang sangat sesuai untuk {target_usia}.
+        PENTING: Gunakan gaya bahasa dan kosa kata yang sangat sesuai untuk {target_usia} DENGAN KETERANGAN USIA: GEN Z= 18-24tahun, DEWASA= 24-35tahun & UMUM= 18-50tahun.
+        Format harus terdiri dari:
+            1. **HOOK**: Kalimat pembuka yang bikin orang berhenti scrolling.
+            2. **MASALAH**: Singgung keresahan yang dialami calon pembeli sesuai {konteks} & {target_usia}.
+            3. **SOLUSI/VALUE**: Kenapa produk {produk} ini wajib dibeli.
+            4. **CTA**: Ajakan beli di keranjang pojok kiri bawah
         Wajib gunakan format vertikal ke bawah dengan jeda antar baris yang jelas. 
-        DILARANG MENGGUNAKAN TABEL.
+        GUNAKAN GARIS PEMBATAS ANTARA BAGIAN VISUAL DAN BAGIAN VOICE OVER.
 
         Susun seperti ini:
 
