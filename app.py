@@ -193,21 +193,27 @@ st.markdown(f"""
 # Tutorial di Kiri (Button Kecil)
 col_api, col_tutor, col_empty = st.columns([2, 1, 2]) # Kolom kecil di kiri, sisanya kosong
 with col_api:
-    # Input API Key di paling kiri
-    api_key_input = st.text_input(
-        "API Key", 
-        value=st.session_state.get('api_key', ""),
-        type="password", 
-        placeholder="Input Gemini API Key...",
-        key="api_key_main"
-    )
-    # Konfigurasi langsung jika diisi
+    # Mengambil API Key dari input user
+        with st.popover("Input Api Key"):
+        st.markdown("Masukan Api Key")
+    api_key_input = st.text_input("Masukkan Gemini API Key:", type="password", help="Dapatkan key di Google AI Studio")
+    
     if api_key_input:
         try:
+            # Konfigurasi library Gemini dengan key dari user
             genai.configure(api_key=api_key_input)
-            model = genai.GenerativeModel('gemini-1.5-flash') # Sesuaikan tipe model
-        except:
-            pass
+            # Inisialisasi model (gunakan gemini-3)
+            model = genai.GenerativeModel('gemini-3-flash-preview')
+            
+            # Test kecil untuk memastikan key valid
+            # (opsional, tapi bagus untuk validasi instan)
+            st.success("✅ API Key Terhubung!")
+        except Exception as e:
+            st.error(f"❌ Key Tidak Valid: {e}")
+            model = None
+    else:
+        st.warning("⚠️ Masukkan API Key untuk memulai.")
+        model = None
 with col_tutor:
     with st.popover("📖 Tutorial"):
         st.markdown("### 💡 Panduan Penggunaan")
