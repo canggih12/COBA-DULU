@@ -180,7 +180,7 @@ st.markdown("""
 st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
 # --- INPUT API KEY ---
 api_key_input = st.text_input("Masukkan Gemini API Key:", type="password", help="Dapatkan key di Google AI Studio")
-        if api_key_input:
+if api_key_input:
             try:
                 genai.configure(api_key=api_key_input)
                 model = genai.GenerativeModel('gemini-1.5-flash') # Rekomendasi pakai flash terbaru
