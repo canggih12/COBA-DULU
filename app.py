@@ -173,7 +173,7 @@ st.markdown(img_to_html("logo.png"), unsafe_allow_html=True)
 
 st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
 # --- INPUT API KEY ---
-    api_key_input = st.text_input("Masukkan Gemini API Key:", type="password", help="Dapatkan key di Google AI Studio")
+api_key_input = st.text_input("Masukkan Gemini API Key:", type="password", help="Dapatkan key di Google AI Studio")
     
     if api_key_input:
         try:
