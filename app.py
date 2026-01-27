@@ -85,16 +85,18 @@ gen_txt = "#FFFFFF"
 st.markdown(f"""
     <style>
         /* Paksa kolom tetap sejajar ke samping di layar HP */
-    [data-testid="column"] {{
-        width: fit-conten !important;
-        flex: unset !important;
-        min-width: unset !important;
+     [data-testid="stHorizontalBlock"] {{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 10px; /* Jarak antar tombol */
     }}
     
-    /* Menghapus padding berlebih pada container kolom */
-    [data-testid="stHorizontalBlock"] {{
-        gap: 10px !important;
-        justify-content: flex-start !important;
+        /* Memaksa kolom untuk tidak melebar otomatis */
+    [data-testid="column"] {{
+        width: fit-content !important;
+        flex: unset !important;
+        min-width: unset !important;
     }}
 
     .logo-container {{
@@ -132,11 +134,15 @@ st.markdown(f"""
         width: fit-content !important;
     }}
     
-    .stPopover button {{
-        width: fit-content !important; /* Tombol tidak lagi memaksa lebar penuh */
-        padding: 0px 15px !important; /* Memberi ruang di dalam tombol agar elegan */
-        height: 2.5em !important;     /* Ukuran tinggi yang lebih ringkas */
-        font-size: 0.85em !important;
+     .stPopover button {{
+        width: fit-content !important;
+        padding: 0.2rem 1rem !important;
+        height: 2.8em !important;
+        border-radius: 8px !important;
+        border: 1px solid #d1d1d1 !important;
+        background-color: white !important;
+        color: #333 !important;
+        font-size: 0.9em !important;
     }}
 
     .box-container {{
