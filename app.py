@@ -1,6 +1,25 @@
 import streamlit as st
 import google.generativeai as genai
 import base64
+from fpdf import FPDF  # <--- Tambahkan import ini
+
+# --- FUNGSI UNTUK GENERATE PDF ---
+def create_pdf(text):
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+    
+    # Judul Dokumen
+    pdf.set_font("Arial", style='B', size=16)
+    pdf.cell(200, 10, txt="SKRIP KONTEN TIKTOK", ln=True, align='C')
+    pdf.ln(10) # Jarak baris
+    
+    # Isi Skrip
+    pdf.set_font("Arial", size=11)
+    # Multi_cell digunakan agar teks otomatis pindah baris (wrap)
+    pdf.multi_cell(0, 10, txt=text)
+    
+    return pdf.output(dest='S').encode('latin-1') # Return sebagai bytes
 
 def get_base64_of_bin_file(bin_file):
     with open(bin_file, 'rb') as f:
@@ -293,9 +312,24 @@ if 'hasil_ai' in st.session_state:
     # Kotak Voice Over
     st.markdown("<span class='label-box'>Salin Skrip Disini)</span>", unsafe_allow_html=True)
     st.code(vo_text, language="text")
-     # Tombol Navigasi (Warna dan Nama Baru)
-    col_re, col_done = st.columns(2)
-    with col_done:
+    
+  # --- BAGIAN TOMBOL DOWNLOAD PDF ---
+    # Kita buat 3 kolom untuk tombol Reset dan Download
+    col_pdf, col_re = st.columns([1, 1])
+    
+    with col_pdf:
+        # Generate data PDF
+        pdf_bytes = create_pdf(st.session_state.hasil_ai)
+        
+        st.download_button(
+            label="📥 Simpan ke PDF",
+            data=pdf_bytes,
+            file_name=f"skrip_{produk.replace(' ', '_')}.pdf",
+            mime="application/pdf",
+            use_container_width=True
+        )
+
+    with col_re:
         if st.button("🗑️ RESET", key="btn_reset", use_container_width=True, on_click=reset_form):
             st.rerun()
             # --- FOOTER (NAMA PEMBUAT) ---
