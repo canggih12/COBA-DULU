@@ -5,27 +5,25 @@ from fpdf import FPDF
 
 # --- FUNGSI UNTUK GENERATE PDF (VERSI FPDF2) ---
 def create_pdf(text):
-    # Inisialisasi FPDF2
     pdf = FPDF()
     pdf.add_page()
     
-    # Gunakan font standar yang mendukung latin-1, 
-    # fpdf2 akan mencoba menangani karakter unicode secara otomatis
+    # Judul
     pdf.set_font("helvetica", style='B', size=16)
-    
-    # Judul Dokumen
     pdf.cell(0, 10, txt="SKRIP KONTEN TIKTOK", ln=True, align='C')
     pdf.ln(10)
     
-    # Isi Skrip
+    # Isi
     pdf.set_font("helvetica", size=11)
     
-    # FPDF2 mendukung pengerjaan string UTF-8 secara langsung
-    # Kita gunakan multi_cell agar teks panjang otomatis turun ke bawah
-    pdf.multi_cell(0, 8, txt=text)
+    # Bersihkan teks sedikit untuk karakter yang benar-benar ilegal di font standar
+    # Meskipun fpdf2 lebih kuat, font standar (helvetica/arial) tetap punya limit
+    clean_text = text.encode('latin-1', 'ignore').decode('latin-1')
+    pdf.multi_cell(0, 8, txt=clean_text)
     
-    # Di fpdf2, .output() tanpa parameter dest='S' akan mengembalikan bytearray/bytes jika diarahkan
-    return pdf.output()
+    # PAKSA OUTPUT KE BYTES
+    # pdf.output() pada fpdf2 mengembalikan bytearray, kita bungkus dengan bytes()
+    return bytes(pdf.output())
 
 def get_base64_of_bin_file(bin_file):
     with open(bin_file, 'rb') as f:
