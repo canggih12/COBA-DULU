@@ -1,25 +1,31 @@
 import streamlit as st
 import google.generativeai as genai
 import base64
-from fpdf import FPDF  # <--- Tambahkan import ini
+from fpdf import FPDF
 
-# --- FUNGSI UNTUK GENERATE PDF ---
+# --- FUNGSI UNTUK GENERATE PDF (VERSI FPDF2) ---
 def create_pdf(text):
+    # Inisialisasi FPDF2
     pdf = FPDF()
     pdf.add_page()
-    pdf.set_font("Arial", size=12)
+    
+    # Gunakan font standar yang mendukung latin-1, 
+    # fpdf2 akan mencoba menangani karakter unicode secara otomatis
+    pdf.set_font("helvetica", style='B', size=16)
     
     # Judul Dokumen
-    pdf.set_font("Arial", style='B', size=16)
-    pdf.cell(200, 10, txt="SKRIP KONTEN TIKTOK", ln=True, align='C')
-    pdf.ln(10) # Jarak baris
+    pdf.cell(0, 10, txt="SKRIP KONTEN TIKTOK", ln=True, align='C')
+    pdf.ln(10)
     
     # Isi Skrip
-    pdf.set_font("Arial", size=11)
-    # Multi_cell digunakan agar teks otomatis pindah baris (wrap)
-    pdf.multi_cell(0, 10, txt=text)
+    pdf.set_font("helvetica", size=11)
     
-    return pdf.output(dest='S').encode('latin-1') # Return sebagai bytes
+    # FPDF2 mendukung pengerjaan string UTF-8 secara langsung
+    # Kita gunakan multi_cell agar teks panjang otomatis turun ke bawah
+    pdf.multi_cell(0, 8, txt=text)
+    
+    # Di fpdf2, .output() tanpa parameter dest='S' akan mengembalikan bytearray/bytes jika diarahkan
+    return pdf.output()
 
 def get_base64_of_bin_file(bin_file):
     with open(bin_file, 'rb') as f:
