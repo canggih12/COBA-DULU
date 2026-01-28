@@ -203,7 +203,7 @@ konteks = st.text_area("🎯 Konteks / Situasi", key="konteks")
 
 col1, col2, col3 = st.columns(3)
 with col1:
-    target_usia = st.selectbox("👥 Target Usia", ["Gen Z", "Dewasa", "Orangan Tua", "Umum"])
+    target_usia = st.selectbox("👥 Target Usia", ["Gen Z", "Dewasa", "Umum"])
 with col2:
     durasi = st.selectbox("⏱️ Durasi", ["20 detik", "35 detik", "45 detik", "60 detik"])
 with col3:
@@ -213,22 +213,21 @@ with col3:
 def generate_content():
     st.session_state["sudah_klik"] = True
     try:
-        prompt = f"""Kamu adalah ahli copywriting affiliate TikTok dan Instagram. 
-        Buat skrip affiliate {durasi} 
+        prompt = f"""Buat skrip affiliate tiktok {durasi} 
         untuk {produk}. 
         Keunggulan Produk: {value_produk}.
         Konteks: {konteks}. 
-        Target Usia: {target_usia}. 
+        Gaya Bahasa: {target_usia}. 
         Angle: {angle}.
         
         PENTING: Gunakan gaya bahasa dan kosa kata yang sangat sesuai untuk {target_usia}.
         Format harus terdiri dari:
             1. **HOOK**: Kalimat pembuka yang bikin orang berhenti scrolling.
-            2. **MASALAH**: Singgung keresahan yang dialami calon pembeli sesuai {konteks} & {target_usia}.
+            2. **MASALAH**: Singgung keresahan yang dialami calon pembeli sesuai {target_usia}.
             3. **SOLUSI/VALUE**: Kenapa produk {produk} ini wajib dibeli.
             4. **CTA**: Ajakan beli di keranjang pojok kiri bawah
         Wajib gunakan format vertikal ke bawah dengan jeda antar baris yang jelas. 
-        DILARANG GUNAKAN TABEL.
+        DILARANG GUNAKAN KATA ANDA,SAYA DAN TABEL.
 
         Susun seperti ini:
 
