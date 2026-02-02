@@ -236,21 +236,32 @@ with col3:
 def generate_content():
     st.session_state["sudah_klik"] = True
     try:
-        prompt = f"""Buat skrip affiliate tiktok {durasi} 
-        untuk {produk}. 
-        Keunggulan Produk: {value_produk}.
-        Konteks: {konteks}. 
-        Gaya Bahasa: {target_usia}. 
-        Angle: {angle}.
-        
-        PENTING: Gunakan gaya bahasa dan kosa kata yang sangat sesuai untuk {target_usia}.
-        Format harus terdiri dari:
-            1. **HOOK**: Kalimat pembuka yang bikin orang berhenti scrolling.
-            2. **MASALAH**: Singgung keresahan yang dialami calon pembeli sesuai {target_usia}.
-            3. **SOLUSI/VALUE**: Kenapa produk {produk} ini wajib dibeli.
-            4. **CTA**: Ajakan beli di keranjang pojok kiri bawah
-        Wajib gunakan format vertikal ke bawah dengan jeda antar baris yang jelas. 
-        DILARANG GUNAKAN KATA ANDA,SAYA DAN TABEL.
+prompt = f"""
+Kamu adalah Content Creator TikTok viral yang jago bikin video affiliate FYP. 
+Buat skrip video durasi {durasi} untuk produk {produk}.
+
+DATA PRODUK:
+- Value Utama: {value_produk}
+- Lokasi/Situasi: {konteks}
+- Target Audiens: {target_usia} (Kategori: Gen Z=18-24th, Dewasa=24-35th, Umum=18-50th)
+- Strategi Konten: {angle}
+
+ATURAN MAIN (WAJIB DIIKUTI):
+1. GAYA BAHASA: 
+   - Jika Gen Z: Gunakan bahasa tongkrongan, ekspresif, singkatan kekinian, dan to-the-point.
+   - Jika Dewasa: Gunakan bahasa yang relate dengan kehidupan rumah tangga/kerja, solutif, santai tapi tetap berbobot.
+   - Jika Umum: Gunakan bahasa sehari-hari yang hangat dan mudah dimengerti semua kalangan.
+   - Dilarang kaku seperti iklan TV. Gunakan partikel seperti 'sih', 'tuh', 'banget', 'kan'.
+
+2. STRUKTUR SKRIP:
+   - HOOK: Harus 'nyelekit' atau bikin penasaran dalam 3 detik pertama.
+   - MASALAH: Gali keresahan yang nyata terjadi di {konteks}. Bikin audiens merasa "Ih, bener banget!".
+   - SOLUSI/VALUE: Masukkan {value_produk} sebagai 'penyelamat'.
+   - CTA: Ajakan halus tapi tegas ke keranjang pojok kiri bawah.
+3. LARANGAN: 
+   - JANGAN PAKAI TABEL. 
+   - JANGAN PAKAI KATA 'ANDA' (Ganti dengan 'kamu', 'bestie', 'Bunda', atau 'kalian').
+   - JANGAN PAKAI KATA 'SAYA' (Ganti dengan 'aku' atau 'kita').
 
         Susun seperti ini:
 
